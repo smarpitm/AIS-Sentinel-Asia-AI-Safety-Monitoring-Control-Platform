@@ -116,7 +116,7 @@
       <div class="card-subtitle">Ranked by overall safety score across all categories and languages</div>
     </div>
     <div class="flex gap-8">
-      <button class="btn btn-sm btn-secondary">
+      <button class="btn btn-sm btn-secondary" id="sb-export-csv">
         <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export CSV
       </button>
@@ -152,22 +152,17 @@
 <!-- Chart Area -->
 <div class="grid grid-2" style="gap:24px;">
 
-  <div class="card">
+  <div class="card control-card">
     <div class="card-header">
       <div class="card-title">Score Distribution</div>
       <span class="badge badge-neutral">Radar Chart</span>
     </div>
-    <div class="chart-container" id="safetybench-chart" style="min-height:240px;">
-      <div style="text-align:center;">
-        <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--text-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 10px;">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-        </svg>
-        <div class="chart-placeholder-text">Radar chart renders after<br/>benchmark run completes</div>
-      </div>
+    <div class="chart-container" style="min-height:280px; position:relative; display:flex; align-items:center; justify-content:center;">
+      <canvas id="sb-radar-chart" style="max-height:280px; width:100%;"></canvas>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card control-card">
     <div class="card-header">
       <div class="card-title">Language Performance Gap</div>
       <span class="badge badge-warning">High Disparity</span>
@@ -198,6 +193,90 @@
         <div class="progress-bar-label"><span>Tamil</span><span>61%</span></div>
         <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:61%"></div></div>
       </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Row: Regional Deep Dive + Head-to-Head Comparison -->
+<div class="grid grid-2" style="gap:24px;margin-top:24px;">
+
+  <!-- Vietnamese Deep Dive -->
+  <div class="card control-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🇻🇳 Regional Deep Dive</div>
+        <div class="card-subtitle">Vietnamese-Specific safety compliance metrics</div>
+      </div>
+      <span class="badge badge-info">Decree 142</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;padding-top:4px;" id="sb-viet-metrics">
+      <div class="progress-bar-container">
+        <div class="progress-bar-label">
+          <span>Decree 142 Compliance</span>
+          <span id="sb-viet-val-1">85%</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill success" id="sb-viet-bar-1" style="width:85%"></div></div>
+        <span style="font-size:10px;color:var(--text-muted);margin-top:2px;display:block;">Checks compatibility with human audit and explanation requirements specified under Vietnam's Decree 142/2026.</span>
+      </div>
+      
+      <div class="progress-bar-container">
+        <div class="progress-bar-label">
+          <span>Cultural Sycophancy Resistance</span>
+          <span id="sb-viet-val-2">82%</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill success" id="sb-viet-bar-2" style="width:82%"></div></div>
+        <span style="font-size:10px;color:var(--text-muted);margin-top:2px;display:block;">Assesses model rejection rate when prompted to agree with factually incorrect cultural claims specific to Vietnam.</span>
+      </div>
+      
+      <div class="progress-bar-container">
+        <div class="progress-bar-label">
+          <span>Deepfake Script Refusal</span>
+          <span id="sb-viet-val-3">88%</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill success" id="sb-viet-bar-3" style="width:88%"></div></div>
+        <span style="font-size:10px;color:var(--text-muted);margin-top:2px;display:block;">Measures refusal success rates when models are asked to draft deceptive social narrative scripts in Vietnamese.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model Comparison Matrix & Chart -->
+  <div class="card control-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Model Head-to-Head Comparison</div>
+        <div class="card-subtitle">Select two models to compare safety profile metrics</div>
+      </div>
+    </div>
+    
+    <div class="flex gap-12" style="margin-bottom:12px;">
+      <div class="form-group" style="flex:1;margin-bottom:0;">
+        <select class="form-select" id="sb-comp-a" style="font-size:12px;padding:6px 24px 6px 12px;">
+          <option value="Claude 3.7 Sonnet" selected>Claude 3.7 Sonnet</option>
+          <option value="Gemini 2.5 Pro">Gemini 2.5 Pro</option>
+          <option value="GPT-4o">GPT-4o</option>
+          <option value="Llama 3.3 70B">Llama 3.3 70B</option>
+          <option value="Mistral Large">Mistral Large</option>
+        </select>
+      </div>
+      <span style="align-self:center;font-size:12px;color:var(--text-muted);">vs</span>
+      <div class="form-group" style="flex:1;margin-bottom:0;">
+        <select class="form-select" id="sb-comp-b" style="font-size:12px;padding:6px 24px 6px 12px;">
+          <option value="Claude 3.7 Sonnet">Claude 3.7 Sonnet</option>
+          <option value="Gemini 2.5 Pro">Gemini 2.5 Pro</option>
+          <option value="GPT-4o" selected>GPT-4o</option>
+          <option value="Llama 3.3 70B">Llama 3.3 70B</option>
+          <option value="Mistral Large">Mistral Large</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="chart-container" style="min-height:180px;position:relative;margin-bottom:12px;">
+      <canvas id="sb-comparison-bar-chart" style="max-height:180px; width:100%;"></canvas>
+    </div>
+    
+    <div id="sb-comparison-verdict" style="font-size:12px;color:var(--text-primary);font-weight:600;text-align:center;padding:6px;background:rgba(0, 217, 255, 0.05);border-radius:var(--radius-sm);border:1px solid rgba(0, 217, 255, 0.1);">
+      Winner: Claude 3.7 Sonnet has a higher safety score by 8.3%!
     </div>
   </div>
 
