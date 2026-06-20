@@ -22,6 +22,10 @@
 </p>
 
 <p align="center">
+  <a href="https://ais-sentinel.streamlit.app"><img src="https://img.shields.io/badge/🌐_Live_Demo-ais--sentinel.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo"/></a>
+</p>
+
+<p align="center">
   <a href="#-quickstart"><img src="https://img.shields.io/badge/🚀_Get_Started-→-00d2ff?style=for-the-badge&labelColor=0d1117" alt="Get Started"/></a>&nbsp;
   <a href="#%EF%B8%8F-system-architecture"><img src="https://img.shields.io/badge/🏗️_Architecture-→-7f5af0?style=for-the-badge&labelColor=0d1117" alt="Architecture"/></a>&nbsp;
   <a href="#-key-results"><img src="https://img.shields.io/badge/📊_Results-→-2cb67d?style=for-the-badge&labelColor=0d1117" alt="Results"/></a>&nbsp;
@@ -230,7 +234,7 @@ AIS-Sentinel/
 │
 ├── 🤖 modules/agentguard/                # Autonomous agent monitoring
 │   ├── agent.py                          # Creative LLM agent (5 attack scenarios)
-│   ├── environment.py                    # Slide designer sandbox (800×600 canvas)
+│   ├── environment.py                    # Slide designer sandbox (1200×800 canvas)
 │   └── monitor.py                        # Rule-based + LLM monitor (Pareto analysis)
 │
 ├── 📜 modules/policybridge/              # Regulatory compliance
@@ -256,10 +260,11 @@ AIS-Sentinel/
 │   ├── validate_classifier.py            # Classifier validation (accuracy, F1, precision)
 │   └── validation_results.json           # Cached validation output
 │
-├── .env                                  # 🔐 GEMINI_API_KEY
+├── .env                                  # 🔐 GEMINI_API_KEY (git-ignored)
+├── .env.example                          # Template for environment variables
 ├── .gitignore
 ├── requirements.txt                      # Python dependencies
-├── [TECHNICAL_SUMMARY.md](TECHNICAL_SUMMARY.md)                  # Academic summary for submission
+├── TECHNICAL_SUMMARY.md                  # Academic summary for submission
 └── README.md                             # 📖 You are here
 ```
 
@@ -304,11 +309,15 @@ Create a `.env` file in the project root:
 GEMINI_API_KEY="your-gemini-api-key-here"
 ```
 
+> 💡 Or copy from the template: `cp .env.example .env` and fill in your key.
+
 ### Launch the Dashboard
 
 ```bash
 streamlit run frontend/app.py
 ```
+
+> **Or visit the live deployment:** [**ais-sentinel.streamlit.app**](https://ais-sentinel.streamlit.app) — no setup required.
 
 ### Run Tests
 
@@ -662,13 +671,15 @@ python tests/validate_classifier.py # Requires GEMINI_API_KEY
   <strong>Global South AIS Challenge 2026 — Track 3: Technical Safety</strong>
   <br/>
   <em>AI Safety Institute Network</em>
+  <br/><br/>
+  <a href="https://ais-sentinel.streamlit.app"><strong>🌐 Live Demo → ais-sentinel.streamlit.app</strong></a>
 </p>
 
 ---
 
 ## 🤝 Team
 
-**Built by [Smarpit Malik](https://github.com/smarpitm) and [Kush Saraswat](https://github.com/DeveloperKush)** — with ❤️, ☕ during the Global Hackathon 2026.
+**Built by [Smarpit Malik](https://github.com/smarpitm) and [Kush Saraswat](https://github.com/DeveloperKush)** — with ❤️ and ☕ during the Global Hackathon 2026.
 
 ---
 
