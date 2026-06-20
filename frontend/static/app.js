@@ -1338,6 +1338,30 @@ document.addEventListener('DOMContentLoaded', () => {
   showPage('intelstream');
   // Initialize Card Zoom feature
   initCardZoom();
+
+  // Initialize mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  if (mobileMenuBtn && sidebar && sidebarOverlay) {
+    const toggleMenu = () => {
+      sidebar.classList.toggle('open');
+      sidebarOverlay.classList.toggle('open');
+    };
+    const closeMenu = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('open');
+    };
+
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+    sidebarOverlay.addEventListener('click', closeMenu);
+
+    // Close when navigating
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', closeMenu);
+    });
+  }
 });
 
 // ============================================================
