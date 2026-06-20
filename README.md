@@ -14,7 +14,7 @@
 </div>
 
 <h3 align="center">
-  <em>Asia's First Unified AI Safety Monitoring & Control Platform</em>
+  <em>Asia's First Unified AI Safety Monitoring &amp; Control Platform</em>
 </h3>
 
 <p align="center">
@@ -22,7 +22,8 @@
 </p>
 
 <p align="center">
-  <a href="https://ais-sentinel.streamlit.app"><img src="https://img.shields.io/badge/🌐_Live_Demo-ais--sentinel.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo"/></a>
+  <a href="https://ais-sentinel.streamlit.app"><img src="https://img.shields.io/badge/🌐_Live_Demo_1-ais--sentinel.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo 1"/></a>&nbsp;
+  <a href="https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/"><img src="https://img.shields.io/badge/🌐_Live_Demo_2-ais--sentinel--c4ibez.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo 2"/></a>
 </p>
 
 <p align="center">
@@ -39,9 +40,10 @@
   <img src="https://img.shields.io/badge/python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+"/>
   <img src="https://img.shields.io/badge/Gemini_2.5-Flash_API-8E75B2?style=flat-square&logo=google&logoColor=white" alt="Gemini Flash"/>
   <img src="https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit"/>
-  <img src="https://img.shields.io/badge/Plotly-Visualizations-3F4F75?style=flat-square&logo=plotly&logoColor=white" alt="Plotly"/>
+  <img src="https://img.shields.io/badge/FastAPI-REST_API-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Tornado-Web_Server-FF6F00?style=flat-square" alt="Tornado"/>
   <img src="https://img.shields.io/badge/SQLite-Database-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite"/>
-  <img src="https://img.shields.io/badge/vLLM-Model_Serving-FF6F00?style=flat-square" alt="vLLM"/>
+  <img src="https://img.shields.io/badge/Mobile-Responsive-2cb67d?style=flat-square" alt="Mobile Responsive"/>
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License"/>
 </p>
 
@@ -120,41 +122,42 @@ Auto-links detected threats to applicable laws across 6 ASEAN+ jurisdictions. Ga
 ## 🏗️ System Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                      STREAMLIT FRONTEND                          │
-│                                                                  │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
-│  │ Intel    │  │ Safety   │  │ Agent    │  │ Policy           │  │
-│  │ Stream   │  │ Bench    │  │ Guard    │  │ Bridge           │  │
-│  │ Dashboard│  │ Leader-  │  │ Theater  │  │ Explorer         │  │
-│  │          │  │ board    │  │          │  │                  │  │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───────┬──────────┘  │
-├───────┼─────────────┼─────────────┼────────────────┼─────────────┤
-│       │       MODULE LAYER        │                │             │
-│  ┌────▼─────┐  ┌────▼─────┐  ┌────▼─────┐  ┌───────▼──────────┐  │
-│  │ Scraper  │  │ Test     │  │ Agent +  │  │ Mapper +         │  │
-│  │ Evaluator│  │ Runner   │  │ Monitor  │  │ Reporter         │  │
-│  │ Brief Gen│  │ Metrics  │  │ Environ. │  │ Gap Analysis     │  │
-│  │          │  │ Leader-  │  │ Pareto   │  │                  │  │
-│  │          │  │ board    │  │ Analysis │  │                  │  │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───────┬──────────┘  │
-├───────┴─────────────┴─────────────┴────────────────┴─────────────┤
-│                         CORE ENGINE                              │
-│                                                                  │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────────┐  │
-│  │  GeminiClient  │  │ SmartTranslator│  │  SQLite Database   │  │
-│  │  ──────────────│  │  ──────────────│  │  ──────────────────│  │
-│  │  • generate()  │  │  • 5 languages │  │  • articles        │  │
-│  │  • structured  │  │  • key sentence│  │  • benchmark_result│  │
-│  │  • translate() │  │    extraction  │  │  • agent_logs      │  │
-│  │  • 3x retry    │  │  • caching     │  │  • context managers│  │
-│  └────────────────┘  └────────────────┘  └────────────────────┘  │
-├──────────────────────────────────────────────────────────────────┤
-│   Gemini 2.5 Flash  ·  vLLM  ·  Plotly  ·  Pillow  · Jinja2      │
-└──────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                      STREAMLIT FRONTEND (SPA)                        │
+│                                                                      │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────────┐  │
+│  │ Intel    │  │ Safety   │  │ Agent    │  │ Policy               │  │
+│  │ Stream   │  │ Bench    │  │ Guard    │  │ Bridge               │  │
+│  │ Dashboard│  │ Leader-  │  │ Theater  │  │ Explorer             │  │
+│  │          │  │ board    │  │          │  │                      │  │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───────┬──────────────┘  │
+├───────┼─────────────┼─────────────┼────────────────┼─────────────────┤
+│       │        TORNADO API LAYER  │                │                 │
+│       │    (hosted inside Streamlit process)       │                 │
+│  ┌────▼─────┐  ┌────▼─────┐  ┌────▼─────┐  ┌───────▼──────────────┐  │
+│  │ Scraper  │  │ Test     │  │ Agent +  │  │ Mapper +             │  │
+│  │ Evaluator│  │ Runner   │  │ Monitor  │  │ Reporter             │  │
+│  │ Brief Gen│  │ Metrics  │  │ Environ. │  │ Gap Analysis         │  │
+│  │          │  │ Leader-  │  │ Pareto   │  │                      │  │
+│  │          │  │ board    │  │ Analysis │  │                      │  │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───────┬──────────────┘  │
+├───────┴─────────────┴─────────────┴────────────────┴─────────────────┤
+│                           CORE ENGINE                                │
+│                                                                      │
+│  ┌────────────────┐  ┌────────────────┐  ┌──────────────────────┐    │
+│  │  GeminiClient  │  │ SmartTranslator│  │  SQLite Database     │    │
+│  │  ──────────────│  │  ──────────────│  │  ────────────────────│    │
+│  │  • generate()  │  │  • 5 languages │  │  • articles          │    │
+│  │  • structured  │  │  • key sentence│  │  • benchmark_results │    │
+│  │  • translate() │  │    extraction  │  │  • agent_logs        │    │
+│  │  • 3x retry    │  │  • caching     │  │  • context managers  │    │
+│  └────────────────┘  └────────────────┘  └──────────────────────┘    │
+├──────────────────────────────────────────────────────────────────────┤
+│  Gemini 2.5 Flash  ·  Tornado  ·  FastAPI  ·  Plotly  ·  Jinja2      │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
-> **Single API key powers the entire platform.** Each module operates independently but shares the core translation and LLM infrastructure.
+> **Single API key powers the entire platform.** Each module operates independently but shares the core translation and LLM infrastructure. The API is hosted **inside** the Streamlit process via Tornado — no separate server is needed.
 
 ---
 
@@ -241,13 +244,22 @@ AIS-Sentinel/
 │   ├── mapper.py                         # Threat → law mapping (6 jurisdictions)
 │   └── reporter.py                       # Compliance reports (HTML + Markdown)
 │
-├── 🌐 frontend/                          # Streamlit dashboard
-│   ├── app.py                            # Main entry point & multi-page router
-│   └── pages/                            # Dashboard pages
-│       ├── 01_intelstream.py             # Alert ticker + article feed + judge simulation
-│       ├── 02_safetybench.py             # Radar charts + leaderboard + SDI display
-│       ├── 03_agentguard.py              # Slide preview + replay + Pareto chart
-│       └── 04_policybridge.py            # Law explorer + ASEAN comparison + reports
+├── 🌐 frontend/                          # Streamlit + SPA dashboard
+│   ├── app.py                            # Main entry point, SPA inliner & Tornado API host
+│   ├── pages/                            # (Legacy) Streamlit multi-page stubs
+│   │   ├── 01_intelstream.py
+│   │   ├── 02_safetybench.py
+│   │   ├── 03_agentguard.py
+│   │   └── 04_policybridge.py
+│   └── static/                           # Single-Page App (SPA) assets
+│       ├── index.html                    # App shell with responsive mobile layout
+│       ├── style.css                     # Full design system (dark/light, responsive)
+│       ├── app.js                        # Navigation, API layer, charts, mobile menu
+│       └── pages/                        # HTML page fragments (injected by app.py)
+│           ├── intelstream.html
+│           ├── safetybench.html
+│           ├── agentguard.html
+│           └── policybridge.html
 │
 ├── ⚙️ config/
 │   ├── benchmark_prompts.json            # 450+ multilingual test cases
@@ -260,10 +272,15 @@ AIS-Sentinel/
 │   ├── validate_classifier.py            # Classifier validation (accuracy, F1, precision)
 │   └── validation_results.json           # Cached validation output
 │
+├── api/
+│   └── main.py                           # Standalone FastAPI server (optional, local dev)
+│
+├── seed_db.py                            # Database seed script (mock data)
 ├── .env                                  # 🔐 GEMINI_API_KEY (git-ignored)
 ├── .env.example                          # Template for environment variables
 ├── .gitignore
-├── requirements.txt                      # Python dependencies
+├── requirements.txt                      # Python dependencies (Cloud deployment)
+├── requirements-local.txt               # Python dependencies (local dev, includes vLLM)
 ├── TECHNICAL_SUMMARY.md                  # Academic summary for submission
 └── README.md                             # 📖 You are here
 ```
@@ -280,7 +297,7 @@ AIS-Sentinel/
 |:---|:---|:---|
 | Python | 3.11+ | Runtime |
 | Gemini API Key | — | LLM backbone ([Get one free](https://aistudio.google.com/app/apikey)) |
-| vLLM | Latest | Model serving for SafetyBench *(optional)* |
+| vLLM | Latest | Model serving for SafetyBench *(optional, local only)* |
 
 ### Installation
 
@@ -317,25 +334,39 @@ GEMINI_API_KEY="your-gemini-api-key-here"
 streamlit run frontend/app.py
 ```
 
-> **Or visit the live deployment:** [**ais-sentinel.streamlit.app**](https://ais-sentinel.streamlit.app) — no setup required.
+> **Or visit the live deployments:**
+> - 🌐 [**ais-sentinel.streamlit.app**](https://ais-sentinel.streamlit.app)
+> - 🌐 [**ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app**](https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/)
+>
+> No setup required — runs directly in your browser.
+
+The dashboard runs as a **fully self-contained single process** — the Streamlit app hosts the REST API internally via Tornado. No separate backend server is needed.
 
 ### Run Tests
 
 ```bash
-# Core pipeline test (LLM client + translator)
-python -m core.test
-
-# Full integration test suite (all 4 modules)
+# Full integration test suite (all 4 modules, < 10 seconds, no API calls)
 python tests/test_integration.py
 
-# Classifier validation (20-article test set)
+# Core pipeline test (LLM client + translator, requires GEMINI_API_KEY)
+python -m core.test
+
+# Classifier validation (20-article test set, requires GEMINI_API_KEY)
 python tests/validate_classifier.py
 ```
 
-**Expected core test output:**
+**Expected integration test output:**
 ```
-Translation: Hello world
-Structured: {'threat_detected': True}
+==================================================
+Running AIS-Sentinel End-to-End Integration Tests
+==================================================
+[PASS] PASS: test_scenario_a_full_pipeline
+[PASS] PASS: test_scenario_b_benchmark_pipeline
+[PASS] PASS: test_scenario_c_agentguard_pipeline
+[PASS] PASS: test_scenario_d_frontend_data_flow
+==================================================
+Total Passed: 4 | Total Failed: 0
+==================================================
 ```
 
 ---
@@ -427,12 +458,12 @@ SDI = Sycophancy Rate (Non-English) / Sycophancy Rate (English)
 </details>
 
 <details>
-<summary><strong>📈 Interactive Visualizations (Plotly)</strong></summary>
+<summary><strong>📈 Interactive Visualizations (Chart.js)</strong></summary>
 
 - **Radar Charts** — 5-axis safety profile per model
 - **Comparison Bar Charts** — Side-by-side model performance
-- **Heatmaps** — Language × category failure rates
-- **Sortable Leaderboard** — Ranked by composite safety score
+- **Vietnamese Deep-Dive** — Decree 142, sycophancy & deepfake compliance bars
+- **Sortable Leaderboard** — Ranked by composite safety score with CSV export
 
 </details>
 
@@ -578,6 +609,36 @@ Three normalized tables powering the entire platform:
 
 <br/>
 
+## 🌐 Frontend Architecture
+
+AIS-Sentinel uses a **Single-Page Application (SPA)** approach running inside Streamlit:
+
+```
+app.py (Streamlit entry point)
+  │
+  ├── Reads static/index.html, static/style.css, static/app.js
+  ├── Reads static/pages/*.html (4 page fragments)
+  ├── Inlines all assets into one self-contained HTML blob
+  ├── Hosts REST API via Tornado (same process, /api/* routes)
+  └── Renders everything with st.components.v1.html()
+```
+
+This approach avoids Streamlit Cloud's static file serving restrictions entirely — there is **no external file server** and **no separate backend process** required on the live deployment.
+
+### Responsive Design
+
+The dashboard is **fully responsive** across all screen sizes:
+
+| Breakpoint | Behaviour |
+|:---|:---|
+| Desktop (> 1024px) | Full sidebar with labels, wide grid layouts |
+| Tablet (768–1024px) | Icon-only collapsed sidebar |
+| Mobile (< 768px) | Hidden sidebar replaced by hamburger menu + slide-out drawer |
+
+---
+
+<br/>
+
 ## 📜 Policy Implications
 
 These findings carry **immediate regulatory significance:**
@@ -599,13 +660,14 @@ These findings carry **immediate regulatory significance:**
 | Layer | Technology | Purpose |
 |:---|:---|:---|
 | **LLM Backbone** | Google Gemini 2.5 Flash | Text generation, structured output, translation |
-| **Model Serving** | vLLM | Serving open-weight models for benchmarking |
-| **Frontend** | Streamlit + Plotly | Interactive dashboards & visualizations |
+| **Frontend** | Streamlit + HTML/CSS/JS SPA | Interactive dashboards & visualizations |
+| **API Server** | Tornado (embedded) / FastAPI (standalone) | REST API endpoints |
+| **Charts** | Chart.js | Radar, bar, and comparison charts |
 | **Database** | SQLite | Persistent storage across all modules |
 | **Templating** | Jinja2 | HTML intelligence brief generation |
 | **Scraping** | feedparser + newspaper3k | RSS feeds & article extraction |
 | **Image Processing** | Pillow | Slide rendering for AgentGuard |
-| **API** | FastAPI + Uvicorn | REST API endpoints |
+| **Model Serving** | vLLM *(optional)* | Serving open-weight models for benchmarking |
 | **Languages** | Python 3.11+ | Everything |
 
 ---
@@ -616,17 +678,19 @@ These findings carry **immediate regulatory significance:**
 
 | Test Suite | File | What It Validates |
 |:---|:---|:---|
-| Core Pipeline | `core/test.py` | LLM client, translator, DB operations |
 | Integration | `tests/test_integration.py` | All 4 modules end-to-end with mock data |
+| Core Pipeline | `core/test.py` | LLM client, translator, DB operations |
 | Classifier | `tests/validate_classifier.py` | 20-article labeled set (5 languages) |
 
 ```bash
-# Run all tests
+# Run integration tests (no API key needed, < 10 seconds)
+python tests/test_integration.py
+
+# Run all tests via pytest
 python -m pytest tests/ -v
 
-# Or individually
-python tests/test_integration.py    # < 10 seconds, no API calls
-python tests/validate_classifier.py # Requires GEMINI_API_KEY
+# Classifier validation (requires GEMINI_API_KEY)
+python tests/validate_classifier.py
 ```
 
 ---
@@ -672,7 +736,9 @@ python tests/validate_classifier.py # Requires GEMINI_API_KEY
   <br/>
   <em>AI Safety Institute Network</em>
   <br/><br/>
-  <a href="https://ais-sentinel.streamlit.app"><strong>🌐 Live Demo → ais-sentinel.streamlit.app</strong></a>
+  <a href="https://ais-sentinel.streamlit.app"><strong>🌐 Live Demo 1 → ais-sentinel.streamlit.app</strong></a>
+  <br/>
+  <a href="https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/"><strong>🌐 Live Demo 2 → ais-sentinel-asia-...c4ibez.streamlit.app</strong></a>
 </p>
 
 ---
@@ -696,7 +762,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/who_don't_speak_English.-🌏-0d1117?style=for-the-badge&labelColor=0d1117&color=7f5af0" alt="who don't speak English"/>
+  <img src="https://img.shields.io/badge/who_don't_speak_English.-🌏-0d1117?style=for-the-badge&labelColor=0d1117&color=7f5af0" alt="who don't speak English."/>
 </p>
 
 <p align="center">
