@@ -2056,3 +2056,71 @@ pre  { padding: 16px; overflow-x: auto; border: 1px solid var(--border-color); }
   box-shadow: none !important;
 }
 
+/* ------------------------------------------------------------
+   Threat Origin Map Pings & Animations
+   ------------------------------------------------------------ */
+.map-ping {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.ping-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ff2a85;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff2a85;
+  z-index: 2;
+}
+
+.ping-ring {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ff2a85;
+  border-radius: 50%;
+  animation: mapPingPulse 1.8s ease-out infinite;
+  opacity: 0;
+  z-index: 1;
+  top: -7px;
+}
+
+@keyframes mapPingPulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.ping-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #00d9ff;
+  background: rgba(8, 9, 15, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-top: 6px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.map-ping:hover .ping-label {
+  color: white;
+  background: #ff2a85;
+  border-color: #ff2a85;
+  box-shadow: 0 0 12px rgba(255, 42, 133, 0.4);
+}
+
+

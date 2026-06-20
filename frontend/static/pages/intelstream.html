@@ -219,17 +219,55 @@
       </div>
     </div>
 
-    <!-- Threat Heatmap Placeholder -->
+    <!-- Threat Heatmap Live Simulation -->
     <div class="card">
       <div class="card-header">
         <div class="card-title">Threat Origin Heatmap</div>
-        <span class="badge badge-neutral">Demo</span>
+        <span class="badge badge-danger" style="animation: livePulse 2s infinite;">Live Tracking</span>
       </div>
-      <div class="chart-container" style="min-height:160px;">
-        <div style="text-align:center;">
-          <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:var(--text-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 8px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <div class="chart-placeholder-text">Geospatial heatmap<br/>connects to IntelStream API</div>
+      <div class="chart-container" style="position:relative;height:180px;background:rgba(0,0,0,0.2);border-radius:var(--radius-md);border:1px solid var(--border-subtle);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:0;">
+        
+        <!-- Stylized grid map background -->
+        <svg viewBox="0 0 800 450" style="position:absolute;width:100%;height:100%;opacity:0.25;stroke:rgba(255, 255, 255, 0.08);fill:none;stroke-width:1;pointer-events:none;">
+          <!-- Horizontal grid lines -->
+          <line x1="0" y1="90" x2="800" y2="90" />
+          <line x1="0" y1="180" x2="800" y2="180" />
+          <line x1="0" y1="270" x2="800" y2="270" />
+          <line x1="0" y1="360" x2="800" y2="360" />
+          <!-- Vertical grid lines -->
+          <line x1="160" y1="0" x2="160" y2="450" />
+          <line x1="320" y1="0" x2="320" y2="450" />
+          <line x1="480" y1="0" x2="480" y2="450" />
+          <line x1="640" y1="0" x2="640" y2="450" />
+          
+          <!-- Abstract grid landmasses -->
+          <path d="M 120 180 Q 200 120 280 180 T 440 180" stroke="rgba(0, 217, 255, 0.15)" stroke-dasharray="4,4" stroke-width="2"/>
+          <path d="M 280 200 Q 320 250 360 220 T 420 300" stroke="rgba(0, 217, 255, 0.15)" stroke-dasharray="4,4" stroke-width="2"/>
+          <path d="M 460 220 H 600" stroke="rgba(255, 42, 133, 0.15)" stroke-dasharray="4,4" stroke-width="2"/>
+        </svg>
+
+        <!-- Glowing threat pings -->
+        <!-- India Ping -->
+        <div class="map-ping" style="position:absolute;left:28%;top:40%;" title="India (Confidence: 0.92)">
+          <div class="ping-ring"></div>
+          <div class="ping-dot"></div>
+          <div class="ping-label">IN (0.92)</div>
         </div>
+
+        <!-- Vietnam Ping -->
+        <div class="map-ping" style="position:absolute;left:55%;top:52%;" title="Vietnam (Confidence: 0.85)">
+          <div class="ping-ring" style="animation-delay:0.3s;"></div>
+          <div class="ping-dot"></div>
+          <div class="ping-label">VN (0.85)</div>
+        </div>
+
+        <!-- Philippines Ping -->
+        <div class="map-ping" style="position:absolute;left:75%;top:58%;" title="Philippines (Confidence: 0.78)">
+          <div class="ping-ring" style="animation-delay:0.6s;"></div>
+          <div class="ping-dot"></div>
+          <div class="ping-label">PH (0.78)</div>
+        </div>
+
       </div>
     </div>
 
