@@ -2030,23 +2030,29 @@ pre  { padding: 16px; overflow-x: auto; border: 1px solid var(--border-color); }
 }
 
 /* Make actual cards have zoom cursors and clean hover effects */
-.metric-card, .article-card {
+.metric-card, .article-card, .alert-priority-card, .card:not(.control-card) {
   cursor: zoom-in;
 }
 
 /* Modal Content override formatting */
 .card-modal-content .metric-card,
-.card-modal-content .article-card {
-  cursor: default;
-  border: none;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  transform: none;
+.card-modal-content .article-card,
+.card-modal-content .alert-priority-card,
+.card-modal-content .card {
+  cursor: default !important;
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 .card-modal-content .metric-card:hover,
-.card-modal-content .article-card:hover {
-  transform: none;
-  box-shadow: none;
+.card-modal-content .article-card:hover,
+.card-modal-content .alert-priority-card:hover,
+.card-modal-content .card:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
 

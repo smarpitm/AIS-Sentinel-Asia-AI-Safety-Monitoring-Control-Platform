@@ -812,11 +812,11 @@ function initCardZoom() {
   }
 
   document.addEventListener('click', (e) => {
-    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('select') || e.target.closest('.toast') || e.target.closest('#toast-container')) {
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea') || e.target.closest('.toast') || e.target.closest('#toast-container')) {
       return;
     }
 
-    const card = e.target.closest('.metric-card') || e.target.closest('.article-card');
+    const card = e.target.closest('.metric-card') || e.target.closest('.article-card') || e.target.closest('.alert-priority-card') || e.target.closest('.card:not(.control-card)');
     if (card) {
       if (card.closest('#card-modal-overlay')) return;
       openCardZoom(card);
