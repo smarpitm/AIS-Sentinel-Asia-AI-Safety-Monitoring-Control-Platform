@@ -10,9 +10,16 @@ st.components.v1.html() call — no separate file server required.
 import os
 import re
 import json
-import tornado.web
 import streamlit as st
 import streamlit.components.v1 as components
+
+# Try importing tornado; make it optional to support environments where it is missing
+HAS_TORNADO = False
+try:
+    import tornado.web
+    HAS_TORNADO = True
+except ImportError:
+    pass
 
 # ---------------------------------------------------------------------------
 # Page Config
@@ -78,10 +85,21 @@ html_shell = re.sub(
 #    and no const-redeclaration SyntaxError.
 fragment_json = json.dumps(page_fragments)
 
+# Determine the API root endpoint for the frontend
+api_root_env = os.environ.get("AIS_API_ROOT")
+if api_root_env:
+    api_root = api_root_env
+elif not HAS_TORNADO:
+    # Fallback to direct local FastAPI server URL if Tornado is not available
+    api_root = "http://localhost:8000"
+else:
+    api_root = "/api"
+
 inlined_js = f"""
 <script>
 // ── Pre-loaded page fragments (injected by app.py) ──────────────────────────
 window.__preloadedFragments = {fragment_json};
+window.__apiRoot = "{api_root}";
 
 // ── Application Logic ───────────────────────────────────────────────────────
 {js}
@@ -120,10 +138,13 @@ st.markdown(
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# Tornado API Handler (Hosts API inside Streamlit process)
-# ---------------------------------------------------------------------------
+if HAS_TORNADO:
+    TornadoRequestHandler = tornado.web.RequestHandler
+else:
+    class TornadoRequestHandler:
+        pass
 
-class TornadoAPIHandler(tornado.web.RequestHandler):
+class TornadoAPIHandler(TornadoRequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
@@ -242,6 +263,9 @@ class TornadoAPIHandler(tornado.web.RequestHandler):
             self.write({"detail": str(e)})
 
 def register_tornado_api():
+    if not HAS_TORNADO:
+        st.warning("Tornado API registration skipped: Tornado module is not available. Please run the backend API separately (e.g. uvicorn api.main:app) or use standard mock fallback mode.")
+        return
     try:
         import gc
         from streamlit.web.server.server import Server

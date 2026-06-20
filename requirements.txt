@@ -12,4 +12,5 @@ httpx
 python-multipart
 python-decouple
 fastapi-limiter
+tornado
 # vllm

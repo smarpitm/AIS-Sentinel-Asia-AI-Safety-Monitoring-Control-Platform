@@ -8,8 +8,8 @@
 // ------------------------------------------------------------
 // Constants
 // ------------------------------------------------------------
-const BASE_URL  = '/api';          // FastAPI backend prefix
-const API_ROOT  = '/api';          // Relative endpoint routed directly via Streamlit Tornado server
+const BASE_URL  = window.__apiRoot || '/api';          // FastAPI backend prefix
+const API_ROOT  = window.__apiRoot || '/api';          // Relative endpoint routed directly via Streamlit Tornado server
 
 /** Pages that have been fetched and cached.
  *  When served via Streamlit (app.py), window.__preloadedFragments is
