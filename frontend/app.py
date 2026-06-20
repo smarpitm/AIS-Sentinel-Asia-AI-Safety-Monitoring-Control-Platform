@@ -286,11 +286,8 @@ def register_tornado_api():
 # Register handler
 register_tornado_api()
 
-# Ensure st.iframe is available, shimming it to components.html if necessary
-if not hasattr(st, "iframe"):
-    st.iframe = components.html
-
-st.iframe(
+# Render the SPA using direct components.html call to avoid st-level metrics/telemetry wrapper TypeErrors
+components.html(
     html_shell,
     height=900,
     scrolling=True,
