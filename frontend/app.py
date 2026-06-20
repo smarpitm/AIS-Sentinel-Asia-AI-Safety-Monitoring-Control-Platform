@@ -243,8 +243,13 @@ class TornadoAPIHandler(tornado.web.RequestHandler):
 
 def register_tornado_api():
     try:
+        import gc
         from streamlit.web.server.server import Server
-        server = Server.get_current()
+        server = None
+        for obj in gc.get_objects():
+            if isinstance(obj, Server):
+                server = obj
+                break
         if server and not hasattr(server, "_api_handler_registered"):
             import tornado.web
             server._tornado_app.add_handlers(r".*", [
@@ -257,11 +262,11 @@ def register_tornado_api():
 # Register handler
 register_tornado_api()
 
-# ---------------------------------------------------------------------------
-# Render the SPA
-# ---------------------------------------------------------------------------
+# Ensure st.iframe is available, shimming it to components.html if necessary
+if not hasattr(st, "iframe"):
+    st.iframe = components.html
 
-components.html(
+st.iframe(
     html_shell,
     height=900,
     scrolling=True,

@@ -738,10 +738,11 @@ function initSafetyBench() {
   if (exportCsv) {
     exportCsv.addEventListener('click', () => {
       const lang = langSel ? langSel.options[langSel.selectedIndex].text : 'All';
-      let csv = 'Rank,Model,Overall Score,Sycophancy,Jailbreak,Hallucination,Bias,Status\n';
+      let csv = 'Rank,Model,Overall Score,Sycophancy,Jailbreak,Hallucination,Safety Disparity\n';
       const rows = demoLeaderboard();
       rows.forEach((r, idx) => {
-        csv += `${idx+1},"${r.model}",${r.overall_score}%,${r.sycophancy}%,${r.jailbreak}%,${r.hallucination}%,${r.bias}%,${r.overall_score >= 75 ? 'Pass' : 'Fail'}\n`;
+        const disparity = r.safety_disparity ?? 1.00;
+        csv += `${idx+1},"${r.model}",${r.overall_score}%,${r.sycophancy}%,${r.jailbreak}%,${r.hallucination}%,${disparity.toFixed(2)}\n`;
       });
       downloadFile(csv, `safetybench_leaderboard_${lang.toLowerCase().replace(/\s+/g, '_')}.csv`, 'text/csv');
       showToast('Leaderboard CSV exported successfully', 'success');
@@ -936,7 +937,7 @@ async function loadLeaderboard() {
   } else if (filter === 'hallucination') {
     list.sort((a,b) => b.hallucination - a.hallucination);
   } else if (filter === 'bias') {
-    list.sort((a,b) => b.bias - a.bias);
+    list.sort((a,b) => b.safety_disparity - a.safety_disparity);
   }
 
   tbody.innerHTML = list.map((r, i) => leaderboardRow(r, i + 1)).join('');
@@ -944,8 +945,8 @@ async function loadLeaderboard() {
 
 function leaderboardRow(r, rank) {
   const overall = r.overall_score;
-  const passed   = overall >= 75;
   const topClass = rank <= 3 ? 'top' : '';
+  const disparity = r.safety_disparity ?? 1.00;
 
   return `
   <tr>
@@ -962,18 +963,17 @@ function leaderboardRow(r, rank) {
     <td>${r.sycophancy}%</td>
     <td>${r.jailbreak}%</td>
     <td>${r.hallucination}%</td>
-    <td>${r.bias}%</td>
-    <td><span class="badge ${passed ? 'badge-success' : 'badge-danger'}">${passed ? 'Pass' : 'Fail'}</span></td>
+    <td>${disparity.toFixed(2)}</td>
   </tr>`;
 }
 
 function demoLeaderboard() {
   return [
-    { model:'Claude 3.7 Sonnet', overall_score:91, sycophancy:89, jailbreak:94, hallucination:88, bias:85 },
-    { model:'Gemini 2.5 Pro',    overall_score:88, sycophancy:85, jailbreak:91, hallucination:86, bias:83 },
-    { model:'GPT-4o',            overall_score:84, sycophancy:82, jailbreak:86, hallucination:83, bias:79 },
-    { model:'Llama 3.3 70B',     overall_score:76, sycophancy:74, jailbreak:78, hallucination:75, bias:70 },
-    { model:'Mistral Large',     overall_score:71, sycophancy:68, jailbreak:74, hallucination:69, bias:65 },
+    { model:'Claude 3.7 Sonnet', overall_score:91, sycophancy:89, jailbreak:94, hallucination:88, safety_disparity:1.00 },
+    { model:'Gemini 2.5 Pro',    overall_score:88, sycophancy:85, jailbreak:91, hallucination:86, safety_disparity:0.83 },
+    { model:'GPT-4o',            overall_score:84, sycophancy:82, jailbreak:86, hallucination:83, safety_disparity:0.75 },
+    { model:'Llama 3.3 70B',     overall_score:76, sycophancy:74, jailbreak:78, hallucination:75, safety_disparity:0.69 },
+    { model:'Mistral Large',     overall_score:71, sycophancy:68, jailbreak:74, hallucination:69, safety_disparity:0.60 },
   ];
 }
 
