@@ -319,7 +319,7 @@ p { color: var(--text-secondary); }
 .main-content {
   margin-left: var(--sidebar-width);
   flex: 1;
-  padding: 32px;
+  padding: 44px;
   overflow-y: auto;
   background: transparent;
   min-height: 100vh;
@@ -379,7 +379,8 @@ p { color: var(--text-secondary); }
 .nav-brand-icon svg {
   width: 20px;
   height: 20px;
-  fill: var(--accent-primary);
+  fill: #b58dfb; /* Glowing light purple */
+  filter: drop-shadow(0 0 4px rgba(181, 141, 251, 0.4));
   position: relative;
   z-index: 1;
 }
@@ -390,13 +391,23 @@ p { color: var(--text-secondary); }
   overflow: hidden;
 }
 
+@keyframes textGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .nav-brand-name {
   font-family: var(--font-brand), sans-serif;
   font-size: 15px;
   font-weight: 700;
-  color: var(--accent-primary);
   white-space: nowrap;
   letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffffff 0%, #ff3366 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradient 4s linear infinite;
 }
 
 .nav-brand-tagline {
@@ -901,7 +912,7 @@ p { color: var(--text-secondary); }
    ------------------------------------------------------------ */
 .grid {
   display: grid;
-  gap: 20px;
+  gap: 28px;
 }
 
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
