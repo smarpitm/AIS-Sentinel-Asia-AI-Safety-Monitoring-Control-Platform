@@ -1,0 +1,203 @@
+<!-- ============================================================
+     IntelStream — Biosecurity Intelligence Dashboard
+     (HTML fragment — no html/head/body tags)
+     ============================================================ -->
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-title">
+    <div class="page-title-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="2"/>
+        <path d="M6.34 6.34a8 8 0 000 11.32"/>
+        <path d="M17.66 6.34a8 8 0 010 11.32"/>
+        <path d="M3.51 3.51a14 14 0 000 16.97"/>
+        <path d="M20.49 3.51a14 14 0 010 16.97"/>
+      </svg>
+    </div>
+    IntelStream
+  </div>
+  <div class="page-subtitle">Biosecurity Intelligence Dashboard — Real-Time Global Threat Monitor</div>
+  <div class="page-actions">
+    <span class="badge badge-success">
+      <span style="width:6px;height:6px;background:currentColor;border-radius:50%;display:inline-block;margin-right:4px;"></span>
+      Live Feed Active
+    </span>
+    <span class="badge badge-info">Asia-Pacific Coverage</span>
+    <span class="badge badge-neutral">Updated: Just now</span>
+  </div>
+</div>
+
+<!-- Metrics Row -->
+<div class="grid grid-4" style="margin-bottom:24px;">
+
+  <div class="card metric-card">
+    <div class="metric-icon indigo">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </div>
+    <div class="metric-value">2,847</div>
+    <div class="metric-label">Articles Monitored</div>
+    <div class="metric-delta positive">↑ 12% this week</div>
+  </div>
+
+  <div class="card metric-card">
+    <div class="metric-icon red">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="metric-value">143</div>
+    <div class="metric-label">Threats Detected</div>
+    <div class="metric-delta negative">↑ 8% vs last week</div>
+  </div>
+
+  <div class="card metric-card">
+    <div class="metric-icon yellow">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <div class="metric-value">6.4</div>
+    <div class="metric-label">Avg Severity Score</div>
+    <div class="metric-delta negative">↑ 0.3 points</div>
+  </div>
+
+  <div class="card metric-card">
+    <div class="metric-icon green">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    </div>
+    <div class="metric-value">94%</div>
+    <div class="metric-label">Coverage Score</div>
+    <div class="metric-delta positive">↑ 2% this month</div>
+  </div>
+
+</div>
+
+<!-- Main Layout: Articles (wide) + Controls (narrow) -->
+<div class="grid grid-2" style="gap:24px;align-items:start;">
+
+  <!-- Left: Article Cards -->
+  <div>
+    <div class="card-header" style="margin-bottom:16px;">
+      <div>
+        <div class="card-title">Latest Intelligence</div>
+        <div class="card-subtitle">Real-time biosecurity threat articles</div>
+      </div>
+      <div class="flex gap-8">
+        <select class="form-select" id="is-threat-filter" style="width:140px;padding:8px 36px 8px 12px;font-size:13px;">
+          <option value="all">All Threats</option>
+          <option value="critical">Critical Only</option>
+          <option value="high">High+</option>
+        </select>
+        <button class="btn btn-sm btn-secondary" onclick="loadArticles()" title="Refresh feed">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Article cards grid — populated by app.js -->
+    <div id="is-articles-grid"
+         class="grid grid-2"
+         style="gap:16px;position:relative;min-height:320px;">
+      <!-- Skeleton placeholders -->
+      <div class="shimmer" style="height:180px;border-radius:14px;"></div>
+      <div class="shimmer" style="height:180px;border-radius:14px;"></div>
+      <div class="shimmer" style="height:180px;border-radius:14px;"></div>
+      <div class="shimmer" style="height:180px;border-radius:14px;"></div>
+    </div>
+
+    <!-- Pagination hint -->
+    <div class="flex items-center justify-between mt-16" style="color:var(--text-muted);font-size:12px;">
+      <span>Showing 6 of 2,847 articles</span>
+      <button class="btn btn-sm btn-ghost">View All →</button>
+    </div>
+  </div>
+
+  <!-- Right: Control Panel -->
+  <div style="display:flex;flex-direction:column;gap:20px;">
+
+    <!-- Region & Filter Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Intelligence Controls</div>
+          <div class="card-subtitle">Configure feed parameters</div>
+        </div>
+        <span class="badge badge-info">Manual</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="is-region">Target Region</label>
+        <select class="form-select" id="is-region">
+          <option value="Asia">Asia-Pacific</option>
+          <option value="Southeast Asia">Southeast Asia</option>
+          <option value="South Asia">South Asia</option>
+          <option value="Global">Global</option>
+          <option value="Africa">Africa</option>
+          <option value="Middle East">Middle East</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Threat Level Filter</label>
+        <div class="form-checkbox-group">
+          <div class="form-checkbox-item">
+            <input type="checkbox" id="is-level-critical" value="critical" checked />
+            <label for="is-level-critical">Critical</label>
+          </div>
+          <div class="form-checkbox-item">
+            <input type="checkbox" id="is-level-high" value="high" checked />
+            <label for="is-level-high">High</label>
+          </div>
+          <div class="form-checkbox-item">
+            <input type="checkbox" id="is-level-medium" value="medium" checked />
+            <label for="is-level-medium">Medium</label>
+          </div>
+          <div class="form-checkbox-item">
+            <input type="checkbox" id="is-level-low" value="low" />
+            <label for="is-level-low">Low</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label" for="is-source-filter">Source Domain</label>
+        <input type="text" class="form-input" id="is-source-filter" placeholder="e.g. nature.com, who.int…" />
+      </div>
+    </div>
+
+    <!-- Weekly Brief Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Weekly Intelligence Brief</div>
+          <div class="card-subtitle">AI-generated threat summary</div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="is-brief-btn">
+          <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+          Generate
+        </button>
+      </div>
+
+      <!-- Preview area -->
+      <div class="brief-preview" id="is-brief-preview">
+        <div class="text-muted" style="text-align:center;padding:20px 0;">
+          <svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:var(--text-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 8px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Click <strong style="color:var(--text-secondary);">Generate</strong> to produce a regional brief
+        </div>
+      </div>
+    </div>
+
+    <!-- Threat Heatmap Placeholder -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Threat Origin Heatmap</div>
+        <span class="badge badge-neutral">Demo</span>
+      </div>
+      <div class="chart-container" style="min-height:160px;">
+        <div style="text-align:center;">
+          <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:var(--text-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 8px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          <div class="chart-placeholder-text">Geospatial heatmap<br/>connects to IntelStream API</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

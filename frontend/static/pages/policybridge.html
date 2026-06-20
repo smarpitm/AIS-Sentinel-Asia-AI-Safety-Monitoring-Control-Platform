@@ -1,0 +1,386 @@
+<!-- ============================================================
+     PolicyBridge — Regulatory Explorer
+     (HTML fragment — no html/head/body tags)
+     ============================================================ -->
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-title">
+    <div class="page-title-icon">
+      <svg viewBox="0 0 24 24">
+        <line x1="12" y1="3" x2="12" y2="20"/>
+        <path d="M5 6l7-3 7 3"/>
+        <path d="M3 18h6a3 3 0 000-6H3l3-6"/>
+        <path d="M21 18h-6a3 3 0 010-6h6l-3-6"/>
+      </svg>
+    </div>
+    PolicyBridge
+  </div>
+  <div class="page-subtitle">Regulatory Explorer — AI Threat to Policy Mapping for Global South Jurisdictions</div>
+  <div class="page-actions">
+    <span class="badge badge-success">14 Jurisdictions</span>
+    <span class="badge badge-info">Live Database</span>
+    <span class="badge badge-warning">Export Ready</span>
+  </div>
+</div>
+
+<!-- Two-Column Layout: Left (3fr) | Right (1fr) -->
+<div class="grid" style="grid-template-columns:3fr 1.2fr;gap:24px;align-items:start;">
+
+  <!-- ─────────────── LEFT COLUMN ─────────────── -->
+  <div style="display:flex;flex-direction:column;gap:20px;">
+
+    <!-- Threat Selector Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Threat Vector Selector</div>
+          <div class="card-subtitle">Select an AI threat category to map to applicable regulations</div>
+        </div>
+      </div>
+      <div class="form-row" style="align-items:flex-end;gap:12px;">
+        <div class="form-group" style="flex:1;margin-bottom:0;">
+          <label class="form-label" for="pb-threat-sel">Threat Category</label>
+          <select class="form-select" id="pb-threat-sel">
+            <option value="Biosecurity">Biosecurity — AI-Assisted Bioweapon Design</option>
+            <option value="AI Safety">AI Safety — Autonomous Unsafe Operation</option>
+            <option value="Dual-Use Research">Dual-Use Research — Misuse Potential</option>
+            <option value="Data Misuse">Data Misuse — Sensitive Data Exfiltration</option>
+            <option value="Model Weaponisation">Model Weaponisation — Harmful Fine-Tuning</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="pb-map-btn" style="height:42px;white-space:nowrap;">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Map to Policy
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Vector Card -->
+    <div class="card" id="pb-active-vector">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Active Threat Vector</div>
+          <div class="card-subtitle">Current selection with affected jurisdictions</div>
+        </div>
+        <span class="badge badge-danger" id="pb-threat-badge">High Risk</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <div style="font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:6px;" id="pb-vector-name">Biosecurity</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0;" id="pb-vector-desc">
+            Engineering of biological agents with pandemic potential using AI-assisted tools.
+          </p>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;color:var(--text-muted);margin-bottom:8px;">Affected Jurisdictions</div>
+          <div class="jurisdiction-tags" id="pb-jurisdictions">
+            <span class="jurisdiction-tag">India</span>
+            <span class="jurisdiction-tag">Singapore</span>
+            <span class="jurisdiction-tag">WHO</span>
+            <span class="jurisdiction-tag">EU</span>
+            <span class="jurisdiction-tag">USA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remediation Checklist Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Remediation Checklist</div>
+          <div class="card-subtitle">Recommended compliance actions for the selected threat vector</div>
+        </div>
+        <button class="btn btn-sm btn-ghost" onclick="
+          document.querySelectorAll('.checklist-item input[type=checkbox]').forEach(cb => {
+            cb.checked=true;
+            cb.closest('.checklist-item').classList.add('checked');
+          });
+          showToast('All items marked complete', 'success');
+        ">Mark All</button>
+      </div>
+
+      <div class="checklist" id="pb-checklist">
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-1" />
+          <label class="checklist-label" for="pb-check-1">
+            Conduct a dual-use research assessment prior to publication of AI-generated sequence data
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-2" />
+          <label class="checklist-label" for="pb-check-2">
+            Implement mandatory biosafety review for LLM outputs involving pathogen genome queries
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-3" />
+          <label class="checklist-label" for="pb-check-3">
+            Register research activities with relevant national biosafety authority (RCGM / IBSC)
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-4" />
+          <label class="checklist-label" for="pb-check-4">
+            Deploy real-time monitoring on AI model API calls involving nucleotide sequence generation
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-5" />
+          <label class="checklist-label" for="pb-check-5">
+            Ensure AI system logs are retained for minimum 5 years under relevant jurisdiction's requirements
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-6" />
+          <label class="checklist-label" for="pb-check-6">
+            Establish incident response protocol for potential biosecurity breach within 72 hours of detection
+          </label>
+        </div>
+
+        <div class="checklist-item">
+          <input type="checkbox" id="pb-check-7" />
+          <label class="checklist-label" for="pb-check-7">
+            File cross-border notification to WHO Global Outbreak Alert and Response Network (GOARN) if applicable
+          </label>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Report Export Hub -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Report Export Hub</div>
+          <div class="card-subtitle">Generate a formatted compliance report for regulators</div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="gap:20px;">
+        <div>
+          <div class="form-group">
+            <label class="form-label">Export Format</label>
+            <div class="form-radio-group" style="flex-direction:column;gap:10px;">
+              <div class="form-radio-item">
+                <input type="radio" id="pb-fmt-html" name="pb-export-fmt" value="HTML" checked />
+                <label for="pb-fmt-html">HTML Report</label>
+              </div>
+              <div class="form-radio-item">
+                <input type="radio" id="pb-fmt-pdf" name="pb-export-fmt" value="PDF" />
+                <label for="pb-fmt-pdf">PDF Document</label>
+              </div>
+              <div class="form-radio-item">
+                <input type="radio" id="pb-fmt-json" name="pb-export-fmt" value="JSON" />
+                <label for="pb-fmt-json">JSON Data</label>
+              </div>
+              <div class="form-radio-item">
+                <input type="radio" id="pb-fmt-md" name="pb-export-fmt" value="Markdown" />
+                <label for="pb-fmt-md">Markdown</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label class="form-label" for="pb-export-filename">Filename</label>
+            <input type="text" class="form-input" id="pb-export-filename"
+                   value="ais-sentinel-report" placeholder="filename without extension" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pb-export-email">Email Report To (optional)</label>
+            <input type="email" class="form-input" id="pb-export-email"
+                   placeholder="compliance@agency.gov" />
+          </div>
+          <button class="btn btn-primary w-full" id="pb-export-btn" style="width:100%;margin-top:4px;">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export Report
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─────────────── RIGHT COLUMN ─────────────── -->
+  <div style="display:flex;flex-direction:column;gap:20px;">
+
+    <!-- Regional Comparison Matrix -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Regional Matrix</div>
+          <div class="card-subtitle">Jurisdiction × Criteria</div>
+        </div>
+        <button class="btn btn-xs btn-ghost" onclick="showToast('Matrix refreshed','info')">Refresh</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="matrix-table" aria-label="Regional Regulatory Comparison Matrix">
+          <thead>
+            <tr>
+              <th>Jurisdiction</th>
+              <th title="Legal Framework Exists">Legal</th>
+              <th title="Enforcement Active">Enforce</th>
+              <th title="AI-Specific Rules">AI Rules</th>
+              <th title="Biosecurity Coverage">Bio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>India</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+            <tr>
+              <td>Singapore</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+            <tr>
+              <td>Indonesia</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="partial-icon">~</span></td>
+            </tr>
+            <tr>
+              <td>Bangladesh</td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="partial-icon">~</span></td>
+            </tr>
+            <tr>
+              <td>Pakistan</td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+            </tr>
+            <tr>
+              <td>Sri Lanka</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="partial-icon">~</span></td>
+            </tr>
+            <tr>
+              <td>Thailand</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+            <tr>
+              <td>Vietnam</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="partial-icon">~</span></td>
+            </tr>
+            <tr>
+              <td>Philippines</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+            <tr>
+              <td>Nepal</td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+              <td><span class="cross-icon">✗</span></td>
+            </tr>
+            <tr>
+              <td>EU (ref)</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+            <tr>
+              <td>WHO</td>
+              <td><span class="check-icon">✓</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="partial-icon">~</span></td>
+              <td><span class="check-icon">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:11px;color:var(--text-muted);">
+        <span><span class="check-icon" style="font-size:13px;">✓</span> Present</span>
+        <span><span class="partial-icon" style="font-size:13px;">~</span> Partial</span>
+        <span><span class="cross-icon" style="font-size:13px;">✗</span> Absent</span>
+      </div>
+    </div>
+
+    <!-- Coverage Score Card -->
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px;">Coverage Scores</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="progress-bar-container">
+          <div class="progress-bar-label"><span>Singapore</span><span>96%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill success" style="width:96%"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-label"><span>India</span><span>74%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:74%"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-label"><span>Thailand</span><span>68%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:68%"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-label"><span>Indonesia</span><span>51%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:51%"></div></div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-label"><span>Nepal</span><span>12%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill danger" style="width:12%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px;">Quick Stats</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="info-row">
+          <span class="info-key">Mapped Laws</span>
+          <span class="info-value">47</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Gap Countries</span>
+          <span class="info-value" style="color:var(--accent-danger);">7</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Avg Coverage</span>
+          <span class="info-value">61%</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Last Updated</span>
+          <span class="info-value">June 2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

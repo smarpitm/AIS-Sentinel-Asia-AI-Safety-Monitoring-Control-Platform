@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AIS-Sentinel — Asia AI Safety Monitoring &amp; Control Platform for the Global South" />
+  <meta name="theme-color" content="#0b0c15" />
+  <title>AIS-Sentinel | AI Safety Monitoring Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     Toast Container
+     ============================================================ -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- ============================================================
+     App Shell
+     ============================================================ -->
+<div class="app-container">
+
+  <!-- ──────────────────────────────────────────────────────────
+       SIDEBAR
+       ────────────────────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+
+    <!-- Brand -->
+    <div class="nav-brand">
+      <div class="nav-brand-icon" aria-hidden="true">
+        <!-- Shield SVG -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+        </svg>
+      </div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">AIS-Sentinel</span>
+        <span class="nav-brand-tagline">AI Safety Monitor</span>
+      </div>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="nav-section" role="list">
+      <div class="nav-section-label">Modules</div>
+
+      <!-- IntelStream -->
+      <div class="nav-item active"
+           id="nav-intelstream"
+           role="listitem"
+           tabindex="0"
+           aria-label="Navigate to IntelStream"
+           onclick="showPage('intelstream')"
+           onkeydown="if(event.key==='Enter')showPage('intelstream')">
+        <span class="nav-icon" aria-hidden="true">
+          <!-- Radar / Signal icon -->
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="2"/>
+            <path d="M6.34 6.34a8 8 0 000 11.32"/>
+            <path d="M17.66 6.34a8 8 0 010 11.32"/>
+            <path d="M3.51 3.51a14 14 0 000 16.97"/>
+            <path d="M20.49 3.51a14 14 0 010 16.97"/>
+          </svg>
+        </span>
+        <span class="nav-label">IntelStream</span>
+        <span class="nav-badge" id="nav-badge-intelstream">LIVE</span>
+      </div>
+
+      <!-- SafetyBench -->
+      <div class="nav-item"
+           id="nav-safetybench"
+           role="listitem"
+           tabindex="0"
+           aria-label="Navigate to SafetyBench"
+           onclick="showPage('safetybench')"
+           onkeydown="if(event.key==='Enter')showPage('safetybench')">
+        <span class="nav-icon" aria-hidden="true">
+          <!-- Shield check icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </span>
+        <span class="nav-label">SafetyBench</span>
+      </div>
+
+      <!-- AgentGuard -->
+      <div class="nav-item"
+           id="nav-agentguard"
+           role="listitem"
+           tabindex="0"
+           aria-label="Navigate to AgentGuard"
+           onclick="showPage('agentguard')"
+           onkeydown="if(event.key==='Enter')showPage('agentguard')">
+        <span class="nav-icon" aria-hidden="true">
+          <!-- Eye icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </span>
+        <span class="nav-label">AgentGuard</span>
+      </div>
+
+      <!-- PolicyBridge -->
+      <div class="nav-item"
+           id="nav-policybridge"
+           role="listitem"
+           tabindex="0"
+           aria-label="Navigate to PolicyBridge"
+           onclick="showPage('policybridge')"
+           onkeydown="if(event.key==='Enter')showPage('policybridge')">
+        <span class="nav-icon" aria-hidden="true">
+          <!-- Balance / Scale icon -->
+          <svg viewBox="0 0 24 24">
+            <line x1="12" y1="3" x2="12" y2="20"/>
+            <path d="M5 6l7-3 7 3"/>
+            <path d="M3 18h6a3 3 0 000-6H3l3-6"/>
+            <path d="M21 18h-6a3 3 0 010-6h6l-3-6"/>
+          </svg>
+        </span>
+        <span class="nav-label">PolicyBridge</span>
+      </div>
+
+    </nav>
+
+    <!-- Footer -->
+    <div class="nav-footer">
+      <div class="nav-footer-version">
+        <span class="nav-status-dot" title="System Online"></span>v1.0.0 · Online
+      </div>
+      <div class="nav-footer-event">Global South AIS Challenge 2026</div>
+    </div>
+
+  </aside>
+
+  <!-- ──────────────────────────────────────────────────────────
+       MAIN CONTENT
+       ────────────────────────────────────────────────────────── -->
+  <main class="main-content" id="main-content" role="main" aria-label="Page content">
+
+    <!-- Page content is injected here by app.js -->
+    <div id="page-content" class="fade-in">
+
+      <!-- Skeleton loader shown before JS initialises -->
+      <div class="page-header">
+        <div class="shimmer" style="height:36px;width:260px;margin-bottom:8px;"></div>
+        <div class="shimmer" style="height:18px;width:380px;margin-left:50px;"></div>
+      </div>
+      <div class="grid grid-4" style="margin-bottom:24px;">
+        <div class="shimmer" style="height:120px;border-radius:14px;"></div>
+        <div class="shimmer" style="height:120px;border-radius:14px;"></div>
+        <div class="shimmer" style="height:120px;border-radius:14px;"></div>
+        <div class="shimmer" style="height:120px;border-radius:14px;"></div>
+      </div>
+      <div class="shimmer" style="height:340px;border-radius:14px;"></div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

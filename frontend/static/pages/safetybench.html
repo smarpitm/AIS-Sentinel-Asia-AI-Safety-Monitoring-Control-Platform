@@ -1,0 +1,204 @@
+<!-- ============================================================
+     SafetyBench — Multilingual Safety Benchmark
+     (HTML fragment — no html/head/body tags)
+     ============================================================ -->
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-title">
+    <div class="page-title-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+    </div>
+    SafetyBench
+  </div>
+  <div class="page-subtitle">Multilingual AI Safety Benchmark — Global South Focus</div>
+  <div class="page-actions">
+    <span class="badge badge-purple">Beta v2.1</span>
+    <span class="badge badge-info">12 Languages</span>
+    <span class="badge badge-success">5 Models Ranked</span>
+  </div>
+</div>
+
+<!-- Metrics Row -->
+<div class="grid grid-3" style="margin-bottom:24px;">
+
+  <div class="card metric-card">
+    <div class="metric-icon red">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <div class="metric-value">0.31</div>
+    <div class="metric-label">Safety Disparity Index</div>
+    <div class="metric-delta negative">↑ 0.04 vs baseline — high-resource langs score significantly better</div>
+  </div>
+
+  <div class="card metric-card">
+    <div class="metric-icon indigo">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+    </div>
+    <div class="metric-value">4,820</div>
+    <div class="metric-label">Tests Completed</div>
+    <div class="metric-delta positive">↑ 340 new this session</div>
+  </div>
+
+  <div class="card metric-card">
+    <div class="metric-icon green">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="metric-value">78.4%</div>
+    <div class="metric-label">Avg Pass Rate</div>
+    <div class="metric-delta positive">↑ 3.2% vs last run</div>
+  </div>
+
+</div>
+
+<!-- Control Bar + Run -->
+<div class="card" style="margin-bottom:24px;">
+  <div class="flex items-center gap-12 flex-wrap">
+    <div class="form-group" style="margin-bottom:0;flex:1;min-width:180px;">
+      <label class="form-label" for="sb-model">Model</label>
+      <select class="form-select" id="sb-model">
+        <option>Claude 3.7 Sonnet</option>
+        <option>Gemini 2.5 Pro</option>
+        <option>GPT-4o</option>
+        <option>Llama 3.3 70B</option>
+        <option>Mistral Large</option>
+        <option>Phi-3.5 Mini</option>
+        <option>Command R+</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:0;flex:1;min-width:160px;">
+      <label class="form-label" for="sb-filter">Category Filter</label>
+      <select class="form-select" id="sb-filter">
+        <option value="all">All Categories</option>
+        <option value="sycophancy">Sycophancy</option>
+        <option value="jailbreak">Jailbreak Resistance</option>
+        <option value="hallucination">Hallucination</option>
+        <option value="bias">Regional Bias</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:0;flex:1;min-width:140px;">
+      <label class="form-label" for="sb-language">Language</label>
+      <select class="form-select" id="sb-language">
+        <option value="all">All Languages</option>
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="ta">Tamil</option>
+        <option value="id">Bahasa Indonesia</option>
+        <option value="sw">Swahili</option>
+        <option value="ar">Arabic</option>
+        <option value="bn">Bengali</option>
+      </select>
+    </div>
+    <div style="padding-top:22px;">
+      <button class="btn btn-primary" id="sb-run-btn">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run Benchmark
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab sb-tab active" data-tab="leaderboard">Leaderboard</div>
+  <div class="tab sb-tab" data-tab="breakdown">Score Breakdown</div>
+  <div class="tab sb-tab" data-tab="languages">Language Analysis</div>
+</div>
+
+<!-- Leaderboard Table -->
+<div class="card" style="margin-bottom:24px;">
+  <div class="card-header">
+    <div>
+      <div class="card-title">Safety Benchmark Leaderboard</div>
+      <div class="card-subtitle">Ranked by overall safety score across all categories and languages</div>
+    </div>
+    <div class="flex gap-8">
+      <button class="btn btn-sm btn-secondary">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table" id="sb-leaderboard-table" aria-label="Safety Benchmark Leaderboard">
+      <thead>
+        <tr>
+          <th style="width:50px;">Rank</th>
+          <th>Model</th>
+          <th>Overall Score</th>
+          <th>Sycophancy</th>
+          <th>Jailbreak</th>
+          <th>Hallucination</th>
+          <th>Bias</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="sb-table-body">
+        <!-- Skeleton rows -->
+        <tr><td colspan="8"><div class="shimmer" style="height:40px;border-radius:8px;"></div></td></tr>
+        <tr><td colspan="8"><div class="shimmer" style="height:40px;border-radius:8px;margin-top:8px;"></div></td></tr>
+        <tr><td colspan="8"><div class="shimmer" style="height:40px;border-radius:8px;margin-top:8px;"></div></td></tr>
+        <tr><td colspan="8"><div class="shimmer" style="height:40px;border-radius:8px;margin-top:8px;"></div></td></tr>
+        <tr><td colspan="8"><div class="shimmer" style="height:40px;border-radius:8px;margin-top:8px;"></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Chart Area -->
+<div class="grid grid-2" style="gap:24px;">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Score Distribution</div>
+      <span class="badge badge-neutral">Radar Chart</span>
+    </div>
+    <div class="chart-container" id="safetybench-chart" style="min-height:240px;">
+      <div style="text-align:center;">
+        <svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:var(--text-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 10px;">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <div class="chart-placeholder-text">Radar chart renders after<br/>benchmark run completes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Language Performance Gap</div>
+      <span class="badge badge-warning">High Disparity</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;padding-top:4px;">
+      <!-- Mini language bars -->
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>English</span><span>91%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill success" style="width:91%"></div></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>Hindi</span><span>79%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill" style="width:79%"></div></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>Bengali</span><span>71%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill" style="width:71%"></div></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>Bahasa Indonesia</span><span>67%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:67%"></div></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>Swahili</span><span>58%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:58%"></div></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-label"><span>Tamil</span><span>61%</span></div>
+        <div class="progress-bar-track"><div class="progress-bar-fill warning" style="width:61%"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
