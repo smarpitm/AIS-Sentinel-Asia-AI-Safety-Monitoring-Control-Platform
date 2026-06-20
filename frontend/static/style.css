@@ -10,12 +10,12 @@
    ------------------------------------------------------------ */
 :root {
   /* Core surfaces */
-  --bg-primary:      #08090f; /* Deepest indigo black */
-  --bg-secondary:    rgba(15, 17, 26, 0.6); /* Translucent dark navy panels */
-  --bg-card:         rgba(21, 24, 39, 0.45); /* Glassmorphic card background */
-  --bg-card-raised:  rgba(30, 34, 55, 0.6); /* Highlighted card */
-  --bg-hover:        rgba(37, 43, 69, 0.7); /* Buttons hover / active */
-  --bg-input:        rgba(11, 13, 20, 0.5); /* Translucent input background */
+  --bg-primary:      #050a1e; /* Deep midnight blue-black */
+  --bg-secondary:    rgba(10, 25, 47, 0.75); /* Rich translucent blue-navy panels */
+  --bg-card:         rgba(15, 35, 65, 0.55); /* Enhanced blue glassmorphic card background */
+  --bg-card-raised:  rgba(25, 45, 85, 0.65); /* Brighter blue highlighted card */
+  --bg-hover:        rgba(30, 55, 95, 0.75); /* Richer blue buttons hover / active */
+  --bg-input:        rgba(8, 18, 35, 0.6); /* Deep blue translucent input background */
 
   /* Borders */
   --border-color:    rgba(255, 255, 255, 0.08); /* Translucent border for glassmorphism */
@@ -58,7 +58,7 @@
   --grid-opacity: 0.035;
 
   /* Theme-specific custom settings */
-  --bg-body:         radial-gradient(circle at 50% 50%, #0f1736 0%, #050712 100%) no-repeat fixed;
+  --bg-body:         radial-gradient(ellipse at top, #0a1f47 0%, #1a3a6e 20%, #0d1b3a 50%, #050a1e 100%) no-repeat fixed;
   --font-brand:      'Plus Jakarta Sans', sans-serif;
   --font-headings:   'Plus Jakarta Sans', sans-serif;
   --font-metrics:    'Plus Jakarta Sans', sans-serif;
@@ -303,16 +303,18 @@ p { color: var(--text-secondary); }
   background: linear-gradient(
     180deg,
     transparent,
-    var(--accent-primary),
+    #00d9ff,
+    #0ea5e9,
+    #00d9ff,
     transparent
   );
-  opacity: 0.25;
+  opacity: 0.35;
   animation: sidebarGlow 4s ease-in-out infinite;
 }
 
 @keyframes sidebarGlow {
-  0%, 100% { opacity: 0.15; }
-  50%      { opacity: 0.4; }
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.5; }
 }
 
 /* Main content */
