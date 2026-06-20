@@ -9,7 +9,7 @@
 // Constants
 // ------------------------------------------------------------
 const BASE_URL  = '/api';          // FastAPI backend prefix (proxied)
-const API_ROOT  = 'http://localhost:8000'; // Direct FastAPI backend port
+const API_ROOT  = 'https://ais-sentinel.onrender.com'; // Live Render FastAPI backend URL
 
 /** Pages that have been fetched and cached.
  *  When served via Streamlit (app.py), window.__preloadedFragments is
