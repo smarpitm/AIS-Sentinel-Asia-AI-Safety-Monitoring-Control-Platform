@@ -264,7 +264,7 @@ class TornadoAPIHandler(TornadoRequestHandler):
 
 def register_tornado_api():
     if not HAS_TORNADO:
-        st.warning("Tornado API registration skipped: Tornado module is not available. Please run the backend API separately (e.g. uvicorn api.main:app) or use standard mock fallback mode.")
+        print("[app.py] Tornado API registration skipped: Tornado module is not available. Please run the backend API separately (e.g. uvicorn api.main:app) or use standard mock fallback mode.")
         return
     try:
         import gc
@@ -276,12 +276,22 @@ def register_tornado_api():
                 break
         if server and not hasattr(server, "_api_handler_registered"):
             import tornado.web
-            server._tornado_app.add_handlers(r".*", [
-                (r"/api/(.*)", TornadoAPIHandler)
-            ])
-            server._api_handler_registered = True
+            # Try newer Streamlit server attribute paths if _tornado_app is not directly available
+            tornado_app = None
+            if hasattr(server, "_tornado_app"):
+                tornado_app = server._tornado_app
+            elif hasattr(server, "_http_server") and hasattr(server._http_server, "_tornado_app"):
+                tornado_app = server._http_server._tornado_app
+            
+            if tornado_app:
+                tornado_app.add_handlers(r".*", [
+                    (r"/api/(.*)", TornadoAPIHandler)
+                ])
+                server._api_handler_registered = True
+            else:
+                print("[app.py] Could not locate Tornado application on Streamlit Server object. Using mock fallback.")
     except Exception as e:
-        st.warning(f"Tornado API registration warning: {e}")
+        print(f"[app.py] Tornado API registration warning: {e}")
 
 # Register handler
 register_tornado_api()
