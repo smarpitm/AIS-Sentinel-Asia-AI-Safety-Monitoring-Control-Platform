@@ -8,8 +8,28 @@
 // ------------------------------------------------------------
 // Constants
 // ------------------------------------------------------------
-const BASE_URL  = window.__apiRoot || '/api';          // FastAPI backend prefix
-const API_ROOT  = window.__apiRoot || '/api';          // Relative endpoint routed directly via Streamlit Tornado server
+// ── Resolve API Root Endpoint ───────────────────────────────
+let resolvedApiRoot = window.__apiRoot || '/api';
+
+if (resolvedApiRoot === '/api' || resolvedApiRoot.startsWith('/')) {
+  // If running inside a cross-origin sandboxed iframe (like Streamlit Cloud components),
+  // relative fetches (/api) resolve to the sandbox domain instead of the parent app domain.
+  // We resolve the absolute URL using the parent page domain found in document.referrer.
+  if (document.referrer) {
+    try {
+      const refUrl = new URL(document.referrer);
+      if (refUrl.origin && !refUrl.origin.includes(window.location.hostname)) {
+        resolvedApiRoot = refUrl.origin.replace(/\/$/, '') + '/api';
+        console.log("[app.js] Cross-origin sandbox detected. Routing API requests to parent origin:", resolvedApiRoot);
+      }
+    } catch (e) {
+      console.warn("[app.js] Could not parse referrer URL:", e);
+    }
+  }
+}
+
+const BASE_URL = resolvedApiRoot;
+const API_ROOT = resolvedApiRoot;
 
 /** Pages that have been fetched and cached.
  *  When served via Streamlit (app.py), window.__preloadedFragments is
