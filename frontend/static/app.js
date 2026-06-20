@@ -324,7 +324,23 @@ function initIntelStream() {
       try {
         const data = await apiGet(`/intelstream/brief?region=${encodeURIComponent(region)}&days=7`);
         if (briefArea) {
-          briefArea.innerHTML = data.html || '<p>Brief generated — no content returned.</p>';
+          if (data.html) {
+            briefArea.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '480px';
+            iframe.style.border = 'none';
+            iframe.style.borderRadius = 'var(--radius-md)';
+            iframe.style.background = '#ffffff';
+            briefArea.appendChild(iframe);
+
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(data.html);
+            doc.close();
+          } else {
+            briefArea.innerHTML = '<p>Brief generated — no content returned.</p>';
+          }
         }
         showToast('Weekly brief generated successfully', 'success');
       } catch (err) {
