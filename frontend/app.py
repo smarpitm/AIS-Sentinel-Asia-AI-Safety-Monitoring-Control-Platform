@@ -13,6 +13,13 @@ import json
 import streamlit as st
 import streamlit.components.v1 as components
 
+# Load Streamlit Secrets into environment variables for standard modules (e.g. GEMINI_API_KEY)
+try:
+    for key, val in st.secrets.items():
+        os.environ[key] = str(val)
+except Exception:
+    pass
+
 # Try importing tornado; make it optional to support environments where it is missing
 HAS_TORNADO = False
 try:
@@ -289,28 +296,42 @@ def register_tornado_api():
         return
     try:
         import gc
-        from streamlit.web.server.server import Server
-        server = None
-        for obj in gc.get_objects():
-            if isinstance(obj, Server):
-                server = obj
+        import tornado.web
+        from tornado.web import Application
+        
+        # 1. Locate Tornado Application instance directly via GC referrers
+        tornado_app = None
+        for obj in gc.get_referrers(Application):
+            if isinstance(obj, Application):
+                tornado_app = obj
                 break
-        if server and not hasattr(server, "_api_handler_registered"):
-            import tornado.web
-            # Try newer Streamlit server attribute paths if _tornado_app is not directly available
-            tornado_app = None
-            if hasattr(server, "_tornado_app"):
-                tornado_app = server._tornado_app
-            elif hasattr(server, "_http_server") and hasattr(server._http_server, "_tornado_app"):
-                tornado_app = server._http_server._tornado_app
-            
-            if tornado_app:
+                
+        # 2. Fallback to scanning Streamlit Server objects in memory
+        if not tornado_app:
+            from streamlit.web.server.server import Server
+            server = None
+            for obj in gc.get_objects():
+                if isinstance(obj, Server):
+                    server = obj
+                    break
+            if server:
+                if hasattr(server, "_tornado_app"):
+                    tornado_app = server._tornado_app
+                elif hasattr(server, "_http_server") and hasattr(server._http_server, "_tornado_app"):
+                    tornado_app = server._http_server._tornado_app
+        
+        # 3. Mount custom API route on the detected Tornado Application instance
+        if tornado_app:
+            if not hasattr(tornado_app, "_api_handler_registered"):
                 tornado_app.add_handlers(r".*", [
                     (r"/api/(.*)", TornadoAPIHandler)
                 ])
-                server._api_handler_registered = True
+                tornado_app._api_handler_registered = True
+                print("[app.py] Successfully mounted Tornado API route handler for /api/(.*)")
             else:
-                print("[app.py] Could not locate Tornado application on Streamlit Server object. Using mock fallback.")
+                print("[app.py] Tornado API route handler already mounted.")
+        else:
+            print("[app.py] Could not locate Tornado application on Streamlit Server object or via GC. Falling back to offline mockup mode.")
     except Exception as e:
         print(f"[app.py] Tornado API registration warning: {e}")
 
