@@ -10,17 +10,17 @@
    ------------------------------------------------------------ */
 :root {
   /* Core surfaces */
-  --bg-primary:      #050a1e; /* Deep midnight blue-black */
-  --bg-secondary:    rgba(10, 25, 47, 0.75); /* Rich translucent blue-navy panels */
-  --bg-card:         rgba(15, 35, 65, 0.55); /* Enhanced blue glassmorphic card background */
-  --bg-card-raised:  rgba(25, 45, 85, 0.65); /* Brighter blue highlighted card */
-  --bg-hover:        rgba(30, 55, 95, 0.75); /* Richer blue buttons hover / active */
-  --bg-input:        rgba(8, 18, 35, 0.6); /* Deep blue translucent input background */
+  --bg-primary:      #0a1628; /* Deep navy blue like the screenshots */
+  --bg-secondary:    rgba(15, 30, 52, 0.85); /* Rich navy panels */
+  --bg-card:         rgba(20, 38, 65, 0.65); /* Navy blue glassmorphic card background */
+  --bg-card-raised:  rgba(28, 48, 78, 0.75); /* Brighter navy highlighted card */
+  --bg-hover:        rgba(35, 58, 92, 0.8); /* Navy blue buttons hover / active */
+  --bg-input:        rgba(12, 22, 40, 0.7); /* Deep navy translucent input background */
 
   /* Borders */
-  --border-color:    rgba(255, 255, 255, 0.08); /* Translucent border for glassmorphism */
-  --border-subtle:   rgba(255, 255, 255, 0.04); /* Extra subtle card border */
-  --border-focus:    #ff2a85; /* Pink focus */
+  --border-color:    rgba(100, 140, 180, 0.12); /* Subtle blue-tinted border for glassmorphism */
+  --border-subtle:   rgba(80, 120, 160, 0.08); /* Extra subtle card border */
+  --border-focus:    #00d9ff; /* Bright cyan focus */
 
   /* Text */
   --text-primary:    #f5f6fa; /* Pure crisp text */
@@ -58,7 +58,7 @@
   --grid-opacity: 0.035;
 
   /* Theme-specific custom settings */
-  --bg-body:         radial-gradient(ellipse at top, #0a1f47 0%, #1a3a6e 20%, #0d1b3a 50%, #050a1e 100%) no-repeat fixed;
+  --bg-body:         linear-gradient(135deg, #0f1d36 0%, #0a1628 50%, #152235 100%) no-repeat fixed;
   --font-brand:      'Plus Jakarta Sans', sans-serif;
   --font-headings:   'Plus Jakarta Sans', sans-serif;
   --font-metrics:    'Plus Jakarta Sans', sans-serif;
@@ -276,10 +276,10 @@ p { color: var(--text-secondary); }
 /* Sidebar */
 .sidebar {
   width: var(--sidebar-width);
-  background: var(--bg-secondary);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid var(--border-color);
+  background: rgba(15, 30, 52, 0.5);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-right: 1px solid rgba(100, 140, 180, 0.2);
   padding: 24px 14px;
   display: flex;
   flex-direction: column;
@@ -572,13 +572,13 @@ p { color: var(--text-secondary); }
    Page Header
    ------------------------------------------------------------ */
 .page-header {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background: rgba(20, 38, 65, 0.45);
+  border: 1px solid rgba(100, 140, 180, 0.15);
   border-radius: var(--radius-lg);
   padding: 38px 42px;
   margin-bottom: 36px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   box-shadow: var(--shadow-sm);
   animation: headerEnter 0.4s var(--transition-slow) both;
 }
@@ -636,24 +636,26 @@ p { color: var(--text-secondary); }
 }
 
 /* ------------------------------------------------------------
-   Cards – Solid, Clean, Professional
+   Cards – Glassmorphism with Strong Blur
    ------------------------------------------------------------ */
 .card {
-  background: var(--bg-card);
+  background: rgba(20, 38, 65, 0.4);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(100, 140, 180, 0.15);
   padding: 30px;
   box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
   position: relative;
 }
 
 .card:hover {
-  border-color: rgba(14,165,233,0.2);
+  border-color: rgba(0, 217, 255, 0.3);
   box-shadow: var(--shadow-md), var(--glow-accent);
   transform: translateY(-1px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 .card-header {
