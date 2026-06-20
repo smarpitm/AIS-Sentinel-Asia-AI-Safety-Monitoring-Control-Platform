@@ -1186,6 +1186,7 @@ function initPolicyBridge() {
     exportBtn.addEventListener('click', async () => {
       const fmt = document.querySelector('input[name="pb-export-fmt"]:checked')?.value || 'HTML';
       const fname = document.getElementById('pb-export-filename')?.value || 'report';
+      const emailVal = document.getElementById('pb-export-email')?.value.trim();
       setBtnLoading(exportBtn, 'Exporting…');
       const threat = threatSel ? threatSel.value : 'Biosecurity';
 
@@ -1255,6 +1256,32 @@ function initPolicyBridge() {
             throw new Error('No HTML report content received');
           }
         }
+
+        // Handle Email delivery if email is filled
+        if (emailVal) {
+          try {
+            const emailData = await apiPost('/policybridge/report/email', {
+              title: `Sentinel Regulatory Analysis: ${threat}`,
+              risk_category: threat,
+              severity: 'High',
+              justification: 'Generated via AIS-Sentinel PolicyBridge compliance interface.',
+              email: emailVal,
+              format: fmt
+            });
+            if (emailData.success) {
+              if (emailData.message.includes("Simulated")) {
+                showToast(`Email simulated to ${emailVal} (Dev Mode)`, 'info');
+              } else {
+                showToast(`Report emailed to ${emailVal}`, 'success');
+              }
+            } else {
+              showToast(`Failed to email report: ${emailData.message}`, 'error');
+            }
+          } catch (emailErr) {
+            console.error('Email API call error:', emailErr);
+            showToast(`Offline mode: Simulated email sent to ${emailVal}`, 'info');
+          }
+        }
       } catch (err) {
         console.error('Export error, using offline generator:', err);
         // Offline demo generators
@@ -1287,6 +1314,9 @@ function initPolicyBridge() {
           }
         }
         showToast('Backend offline — downloading offline demo report', 'warning');
+        if (emailVal) {
+          showToast(`Offline mode: Simulated email sent to ${emailVal}`, 'info');
+        }
       } finally {
         clearBtnLoading(exportBtn);
       }

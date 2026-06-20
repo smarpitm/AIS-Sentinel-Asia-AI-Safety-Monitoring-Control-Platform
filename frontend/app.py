@@ -255,6 +255,27 @@ class TornadoAPIHandler(TornadoRequestHandler):
                 reporter = ComplianceReporter()
                 markdown = reporter.generate_markdown(body)
                 self.write({"markdown": markdown})
+            elif endpoint.startswith("policybridge/report/email"):
+                from modules.policybridge.reporter import ComplianceReporter
+                reporter = ComplianceReporter()
+                recipient = body.get("email")
+                fmt = body.get("format", "HTML")
+                
+                if fmt == "Markdown":
+                    content = reporter.generate_markdown(body)
+                elif fmt == "JSON":
+                    content = json.dumps({
+                        "title": body.get("title", ""),
+                        "risk_category": body.get("risk_category", ""),
+                        "severity": body.get("severity", ""),
+                        "justification": body.get("justification", ""),
+                        "timestamp": body.get("timestamp", "")
+                    }, indent=2)
+                else:
+                    content = reporter.generate_report(body)
+                
+                success, msg = reporter.send_email_report(recipient, body.get("risk_category", "Biosecurity"), content, fmt)
+                self.write({"success": success, "message": msg})
             else:
                 self.set_status(404)
                 self.write({"detail": "Endpoint not found"})
@@ -299,6 +320,6 @@ register_tornado_api()
 # Render the SPA using direct components.html call to avoid st-level metrics/telemetry wrapper TypeErrors
 components.html(
     html_shell,
-    height=900,
+    height=1250,
     scrolling=True,
 )
