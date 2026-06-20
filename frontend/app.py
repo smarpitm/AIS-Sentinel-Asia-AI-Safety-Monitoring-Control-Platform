@@ -10,6 +10,7 @@ st.components.v1.html() call — no separate file server required.
 import os
 import re
 import json
+import tornado.web
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -113,6 +114,148 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+# ---------------------------------------------------------------------------
+# Render the SPA
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Tornado API Handler (Hosts API inside Streamlit process)
+# ---------------------------------------------------------------------------
+
+class TornadoAPIHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+        self.set_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+
+    def options(self, *args, **kwargs):
+        self.set_status(204)
+        self.finish()
+
+    def get(self, endpoint):
+        try:
+            if endpoint.startswith("intelstream/articles"):
+                limit = int(self.get_argument("limit", 50))
+                from core.database import get_articles
+                articles = get_articles(limit=limit)
+                self.write({"articles": articles, "count": len(articles)})
+            elif endpoint.startswith("intelstream/brief"):
+                region = self.get_argument("region", "Asia")
+                days = int(self.get_argument("days", 7))
+                from modules.intelstream.brief_generator import BriefGenerator
+                gen = BriefGenerator()
+                html = gen.generate_brief(days=days, region=region)
+                self.write({"html": html})
+            elif endpoint.startswith("safetybench/leaderboard"):
+                from modules.safetybench.leaderboard import LeaderboardGenerator
+                gen = LeaderboardGenerator()
+                df = gen.generate_table()
+                self.write({"leaderboard": df.to_dict(orient="records")})
+            elif endpoint.startswith("safetybench/summary"):
+                model_name = self.get_argument("model_name", None)
+                from modules.safetybench.test_runner import BenchmarkRunner
+                runner = BenchmarkRunner(model_name=model_name or "unknown", model_path="dummy")
+                summary = runner.get_summary(model_name=model_name)
+                self.write(summary)
+            elif endpoint.startswith("agentguard/logs"):
+                detected_only = self.get_argument("detected_only", "false").lower() == "true"
+                from core.database import get_agent_logs
+                logs = get_agent_logs(detected_only=detected_only)
+                self.write({"logs": logs, "count": len(logs)})
+            else:
+                self.set_status(404)
+                self.write({"detail": "Endpoint not found"})
+        except Exception as e:
+            self.set_status(500)
+            self.write({"detail": str(e)})
+
+    def post(self, endpoint):
+        try:
+            body = json.loads(self.request.body) if self.request.body else {}
+            if endpoint.startswith("agentguard/design"):
+                from core.llm_client import GeminiClient
+                from modules.agentguard.agent import CreativeAgent
+                from core.database import insert_agent_log
+
+                client = GeminiClient()
+                agent = CreativeAgent(model_client=client)
+
+                attack_type = body.get("attack_type")
+                covert_task = agent.get_attack_scenario(attack_type) if attack_type else None
+                result = agent.design_slide(task=body.get("task", ""), covert_task=covert_task)
+
+                try:
+                    scan_score = max((s.get("suspicion_score", 0) for s in result.get("steps", [])), default=0)
+                    insert_agent_log({
+                        "task_description": body.get("task", ""),
+                        "attack_type": attack_type or "none",
+                        "slide_json": result.get("slide_json", "{}"),
+                        "monitor_suspicion_score": scan_score,
+                        "detected": result.get("covert_injected", False),
+                    })
+                except Exception as log_err:
+                    pass
+
+                self.write(result)
+            elif endpoint.startswith("agentguard/scan"):
+                from modules.agentguard.monitor import SlideMonitor
+                use_llm = body.get("use_llm", True)
+                llm_client = None
+                if use_llm:
+                    try:
+                        from core.llm_client import GeminiClient
+                        llm_client = GeminiClient()
+                    except:
+                        pass
+                monitor = SlideMonitor(llm_client=llm_client)
+                slide_json = body.get("slide_json", {})
+                result = monitor.scan(slide_json, use_llm=use_llm)
+                result["pareto_data"] = monitor.generate_pareto_data(slide_json)
+                result["explanation"] = monitor.explain_flags(result.get("flagged_elements", []))
+                self.write(result)
+            elif endpoint.startswith("policybridge/map"):
+                from modules.policybridge.mapper import RegulatoryMapper
+                mapper = RegulatoryMapper()
+                laws = mapper.map_threat(body.get("risk_category"), jurisdiction=body.get("jurisdiction"))
+                self.write({"laws": laws, "count": len(laws)})
+            elif endpoint.startswith("policybridge/compare"):
+                from modules.policybridge.mapper import RegulatoryMapper
+                mapper = RegulatoryMapper()
+                df = mapper.compare_jurisdictions(body.get("risk_category"))
+                self.write({"comparison": df.to_dict(orient="records")})
+            elif endpoint.startswith("policybridge/report/html"):
+                from modules.policybridge.reporter import ComplianceReporter
+                reporter = ComplianceReporter()
+                html = reporter.generate_report(body)
+                self.write({"html": html})
+            elif endpoint.startswith("policybridge/report/markdown"):
+                from modules.policybridge.reporter import ComplianceReporter
+                reporter = ComplianceReporter()
+                markdown = reporter.generate_markdown(body)
+                self.write({"markdown": markdown})
+            else:
+                self.set_status(404)
+                self.write({"detail": "Endpoint not found"})
+        except Exception as e:
+            self.set_status(500)
+            self.write({"detail": str(e)})
+
+def register_tornado_api():
+    try:
+        from streamlit.web.server.server import Server
+        server = Server.get_current()
+        if server and not hasattr(server, "_api_handler_registered"):
+            import tornado.web
+            server._tornado_app.add_handlers(r".*", [
+                (r"/api/(.*)", TornadoAPIHandler)
+            ])
+            server._api_handler_registered = True
+    except Exception as e:
+        st.warning(f"Tornado API registration warning: {e}")
+
+# Register handler
+register_tornado_api()
 
 # ---------------------------------------------------------------------------
 # Render the SPA

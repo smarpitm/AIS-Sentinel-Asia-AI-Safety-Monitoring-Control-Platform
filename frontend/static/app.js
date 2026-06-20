@@ -8,8 +8,8 @@
 // ------------------------------------------------------------
 // Constants
 // ------------------------------------------------------------
-const BASE_URL  = '/api';          // FastAPI backend prefix (proxied)
-const API_ROOT  = 'https://ais-sentinel.onrender.com'; // Live Render FastAPI backend URL
+const BASE_URL  = '/api';          // FastAPI backend prefix
+const API_ROOT  = '/api';          // Relative endpoint routed directly via Streamlit Tornado server
 
 /** Pages that have been fetched and cached.
  *  When served via Streamlit (app.py), window.__preloadedFragments is
