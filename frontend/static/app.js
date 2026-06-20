@@ -24,6 +24,27 @@ const pageCache = (typeof window.__preloadedFragments !== 'undefined')
 let currentPage = null;
 
 // ============================================================
+// Theme Toggle
+// ============================================================
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('ais_theme', newTheme);
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('ais_theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+}
+
+// ============================================================
 // Navigation
 // ============================================================
 
@@ -749,6 +770,75 @@ function debounce(fn, ms) {
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize theme
+  initTheme();
   // Load the default page
   showPage('intelstream');
+  // Initialize Card Zoom feature
+  initCardZoom();
 });
+
+// ============================================================
+// Card Zoom Interaction
+// ============================================================
+
+function initCardZoom() {
+  let overlay = document.getElementById('card-modal-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'card-modal-overlay';
+    overlay.className = 'card-modal-overlay';
+    overlay.innerHTML = `
+      <div class="card-modal-content" id="card-modal-content">
+        <button class="card-modal-close" id="card-modal-close" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div id="card-modal-inner"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('#card-modal-close').addEventListener('click', closeCardZoom);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeCardZoom();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeCardZoom();
+      }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('select') || e.target.closest('.toast') || e.target.closest('#toast-container')) {
+      return;
+    }
+
+    const card = e.target.closest('.metric-card') || e.target.closest('.article-card');
+    if (card) {
+      if (card.closest('#card-modal-overlay')) return;
+      openCardZoom(card);
+    }
+  });
+}
+
+function openCardZoom(cardElement) {
+  const overlay = document.getElementById('card-modal-overlay');
+  const inner = document.getElementById('card-modal-inner');
+  if (!overlay || !inner) return;
+
+  const clone = cardElement.cloneNode(true);
+  inner.innerHTML = '';
+  inner.appendChild(clone);
+  overlay.classList.add('active');
+}
+
+function closeCardZoom() {
+  const overlay = document.getElementById('card-modal-overlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+}
+

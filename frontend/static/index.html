@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="AIS-Sentinel — Asia AI Safety Monitoring &amp; Control Platform for the Global South" />
-  <meta name="theme-color" content="#0b0c15" />
+  <meta name="theme-color" content="#0c1117" />
   <title>AIS-Sentinel | AI Safety Monitoring Platform</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -128,6 +128,17 @@
       </div>
 
     </nav>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-wrap">
+      <span class="theme-toggle-label">Theme</span>
+      <div class="theme-toggle" id="theme-toggle" role="switch" aria-label="Toggle dark/light mode" tabindex="0"
+           onclick="toggleTheme()"
+           onkeydown="if(event.key==='Enter')toggleTheme()">
+        <span class="theme-icon theme-icon-moon">🌙</span>
+        <span class="theme-icon theme-icon-sun">☀️</span>
+      </div>
+    </div>
 
     <!-- Footer -->
     <div class="nav-footer">

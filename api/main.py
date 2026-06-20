@@ -56,6 +56,17 @@ app.add_middleware(
 def on_startup():
     """Initialize the database on startup."""
     init_db()
+    
+    # Auto-seed database if empty
+    articles = get_articles(limit=1)
+    if not articles:
+        logger.info("Seeding database with mock data...")
+        try:
+            from seed_db import seed
+            seed()
+        except ImportError:
+            logger.warning("Could not import seed_db.py")
+
     logger.info("AIS-Sentinel API started — database initialized.")
 
 
