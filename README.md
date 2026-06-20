@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="https://ais-sentinel.streamlit.app"><img src="https://img.shields.io/badge/🌐_Live_Demo_1-ais--sentinel.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo 1"/></a>&nbsp;
-  <a href="https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/"><img src="https://img.shields.io/badge/🌐_Live_Demo_2-ais--sentinel--c4ibez.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo 2"/></a>
+  <a href="https://ais-sentinel-asia-ai.streamlit.app/"><img src="https://img.shields.io/badge/🌐_Live_Demo_2-ais--sentinel--asia--ai.streamlit.app-FF4B4B?style=for-the-badge&labelColor=0d1117&logo=streamlit&logoColor=white" alt="Live Demo 2"/></a>
 </p>
 
 <p align="center">
@@ -336,7 +336,7 @@ streamlit run frontend/app.py
 
 > **Or visit the live deployments:**
 > - 🌐 [**ais-sentinel.streamlit.app**](https://ais-sentinel.streamlit.app)
-> - 🌐 [**ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app**](https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/)
+> - 🌐 [**ais-sentinel-asia-ai.streamlit.app**](https://ais-sentinel-asia-ai.streamlit.app/)
 >
 > No setup required — runs directly in your browser.
 
@@ -738,7 +738,7 @@ python tests/validate_classifier.py
   <br/><br/>
   <a href="https://ais-sentinel.streamlit.app"><strong>🌐 Live Demo 1 → ais-sentinel.streamlit.app</strong></a>
   <br/>
-  <a href="https://ais-sentinel-asia-ai-safety-monitoring-control-platform-c4ibez.streamlit.app/"><strong>🌐 Live Demo 2 → ais-sentinel-asia-...c4ibez.streamlit.app</strong></a>
+  <a href="https://ais-sentinel-asia-ai.streamlit.app/"><strong>🌐 Live Demo 2 → ais-sentinel-asia-ai.streamlit.app</strong></a>
 </p>
 
 ---
