@@ -204,10 +204,16 @@
           <div class="card-title">Weekly Intelligence Brief</div>
           <div class="card-subtitle">AI-generated threat summary</div>
         </div>
-        <button class="btn btn-sm btn-primary" id="is-brief-btn">
-          <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          Generate
-        </button>
+        <div class="flex gap-8">
+          <button class="btn btn-sm btn-primary" id="is-brief-btn">
+            <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            Generate
+          </button>
+          <button class="btn btn-sm btn-secondary" id="is-brief-download-btn" style="display: none;">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+        </div>
       </div>
 
       <!-- Preview area -->

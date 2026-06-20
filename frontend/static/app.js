@@ -22,6 +22,7 @@ const pageCache = (typeof window.__preloadedFragments !== 'undefined')
 
 /** Which page is currently active */
 let currentPage = null;
+let lastGeneratedBriefHtml = null;
 
 // ============================================================
 // Theme Toggle
@@ -307,9 +308,10 @@ function clearBtnLoading(btn) {
 
 function initIntelStream() {
   // Region select listener
-  const regionSel  = document.getElementById('is-region');
-  const briefBtn   = document.getElementById('is-brief-btn');
-  const briefArea  = document.getElementById('is-brief-preview');
+  const regionSel   = document.getElementById('is-region');
+  const briefBtn    = document.getElementById('is-brief-btn');
+  const downloadBtn = document.getElementById('is-brief-download-btn');
+  const briefArea   = document.getElementById('is-brief-preview');
 
   // Load articles on init
   loadArticles();
@@ -325,6 +327,9 @@ function initIntelStream() {
         const data = await apiGet(`/intelstream/brief?region=${encodeURIComponent(region)}&days=7`);
         if (briefArea) {
           if (data.html) {
+            lastGeneratedBriefHtml = data.html;
+            if (downloadBtn) downloadBtn.style.display = 'inline-flex';
+
             briefArea.innerHTML = '';
             const iframe = document.createElement('iframe');
             iframe.style.width = '100%';
@@ -344,31 +349,48 @@ function initIntelStream() {
         }
         showToast('Weekly brief generated successfully', 'success');
       } catch (err) {
-        if (briefArea) {
-          briefArea.innerHTML = `
-            <div style="font-family:'Lora', serif; line-height:1.6; color:var(--text-primary); text-align: left; padding: 4px 0;">
-              <h4 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:15px; font-weight:600; color:var(--accent-hover); margin-bottom:12px;">Weekly Intelligence Summary (${escHtml(region)} Region)</h4>
-              <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
-                <strong>Executive Summary:</strong> Biosecurity surveillance has identified three high-priority threats across India, Vietnam, and the Philippines. Surveillance networks indicate increased dual-use research concerns, zoonotic spillovers, and unexplained respiratory illness clusters.
-              </p>
-              <div style="border-left: 3px solid var(--accent-strong); padding-left: 12px; margin-bottom: 12px;">
-                <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px;">1. Open-source AI Genome Generator (India)</h5>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:0;">Open-source AI model capable of generating synthetic viral genomes identified. High confidence score (0.92) warrants immediate policy alignment under dual-use technology protocols.</p>
-              </div>
-              <div style="border-left: 3px solid var(--accent-strong); padding-left: 12px; margin-bottom: 12px;">
-                <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px;">2. Avian Pathogen Strain Detected (Vietnam)</h5>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:0;">Surveillance confirms wild bird spillover events in the agricultural sector. Confidence level: 0.85.</p>
-              </div>
-              <div style="border-left: 3px solid var(--accent-strong); padding-left: 12px; margin-bottom: 0;">
-                <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px;">3. Respiratory Cluster (Philippines)</h5>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:0;">Cluster under investigation in a remote agricultural province. Confidence level: 0.78.</p>
-              </div>
+        // Fallback demo brief html
+        const demoBrief = `
+          <div style="font-family:'Lora', serif; line-height:1.6; color:#212529; text-align: left; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+            <h4 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:16px; font-weight:600; color:#1a1a2e; margin-bottom:12px; border-bottom: 2px solid #0f3460; padding-bottom: 6px;">Weekly Intelligence Summary (${escHtml(region)} Region)</h4>
+            <p style="font-size:13px; color:#495057; margin-bottom:12px;">
+              <strong>Executive Summary:</strong> Biosecurity surveillance has identified three high-priority threats across India, Vietnam, and the Philippines. Surveillance networks indicate increased dual-use research concerns, zoonotic spillovers, and unexplained respiratory illness clusters.
+            </p>
+            <div style="border-left: 3px solid #dc3545; padding-left: 12px; margin-bottom: 12px;">
+              <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px; color:#212529;">1. Open-source AI Genome Generator (India)</h5>
+              <p style="font-size:12px; color:#6c757d; margin-bottom:0;">Open-source AI model capable of generating synthetic viral genomes identified. High confidence score (0.92) warrants immediate policy alignment under dual-use technology protocols.</p>
             </div>
-          `;
+            <div style="border-left: 3px solid #fd7e14; padding-left: 12px; margin-bottom: 12px;">
+              <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px; color:#212529;">2. Avian Pathogen Strain Detected (Vietnam)</h5>
+              <p style="font-size:12px; color:#6c757d; margin-bottom:0;">Surveillance confirms wild bird spillover events in the agricultural sector. Confidence level: 0.85.</p>
+            </div>
+            <div style="border-left: 3px solid #ffc107; padding-left: 12px; margin-bottom: 0;">
+              <h5 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:13px; font-weight:600; margin-bottom:4px; color:#212529;">3. Respiratory Cluster (Philippines)</h5>
+              <p style="font-size:12px; color:#6c757d; margin-bottom:0;">Cluster under investigation in a remote agricultural province. Confidence level: 0.78.</p>
+            </div>
+          </div>
+        `;
+        lastGeneratedBriefHtml = demoBrief;
+        if (downloadBtn) downloadBtn.style.display = 'inline-flex';
+
+        if (briefArea) {
+          briefArea.innerHTML = demoBrief;
         }
         showToast('Backend offline — displaying demo brief', 'warning');
       } finally {
         clearBtnLoading(briefBtn);
+      }
+    });
+  }
+
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const region = regionSel ? regionSel.value : 'Asia';
+      if (lastGeneratedBriefHtml) {
+        downloadFile(lastGeneratedBriefHtml, `weekly-brief-${region.toLowerCase().replace(/\s+/g, '-')}.html`, 'text/html');
+        showToast('Weekly brief download started', 'success');
+      } else {
+        showToast('No brief content available to download', 'error');
       }
     });
   }
@@ -760,18 +782,106 @@ function initPolicyBridge() {
       const fmt = document.querySelector('input[name="pb-export-fmt"]:checked')?.value || 'HTML';
       const fname = document.getElementById('pb-export-filename')?.value || 'report';
       setBtnLoading(exportBtn, 'Exporting…');
+      const threat = threatSel ? threatSel.value : 'Biosecurity';
+
       try {
-        const threat = threatSel ? threatSel.value : 'Biosecurity';
-        await apiPost('/policybridge/report/html', {
-          title: threat,
-          risk_category: threat,
-          severity: 'High',
-          justification: 'Generated via AIS-Sentinel PolicyBridge',
-        });
-        showToast(`${fmt} report exported as ${fname}`, 'success');
-      } catch (_) {
-        // Simulate download
-        showToast(`Demo export: ${fname}.${fmt.toLowerCase()} — backend offline`, 'warning');
+        if (fmt === 'JSON') {
+          // Construct JSON report
+          const reportJson = JSON.stringify({
+            title: `Sentinel Regulatory Analysis: ${threat}`,
+            risk_category: threat,
+            severity: 'High',
+            justification: `Generated via AIS-Sentinel PolicyBridge Engine for risk evaluation of ${threat} threats.`,
+            timestamp: new Date().toISOString()
+          }, null, 2);
+          downloadFile(reportJson, `${fname}.json`, 'application/json');
+          showToast('JSON report downloaded successfully', 'success');
+        } else if (fmt === 'Markdown') {
+          // Request markdown report from backend
+          const data = await apiPost('/policybridge/report/markdown', {
+            title: `Sentinel Regulatory Analysis: ${threat}`,
+            risk_category: threat,
+            severity: 'High',
+            justification: 'Generated via AIS-Sentinel PolicyBridge compliance interface.',
+          });
+          if (data.markdown) {
+            downloadFile(data.markdown, `${fname}.md`, 'text/markdown');
+            showToast('Markdown report downloaded successfully', 'success');
+          } else {
+            throw new Error('No markdown content received');
+          }
+        } else if (fmt === 'HTML') {
+          // Request HTML report from backend
+          const data = await apiPost('/policybridge/report/html', {
+            title: `Sentinel Regulatory Analysis: ${threat}`,
+            risk_category: threat,
+            severity: 'High',
+            justification: 'Generated via AIS-Sentinel PolicyBridge compliance interface.',
+          });
+          if (data.html) {
+            downloadFile(data.html, `${fname}.html`, 'text/html');
+            showToast('HTML report downloaded successfully', 'success');
+          } else {
+            throw new Error('No HTML content received');
+          }
+        } else if (fmt === 'PDF') {
+          // Generate PDF using browser printing overlay
+          const data = await apiPost('/policybridge/report/html', {
+            title: `Sentinel Regulatory Analysis: ${threat}`,
+            risk_category: threat,
+            severity: 'High',
+            justification: 'Generated via AIS-Sentinel PolicyBridge compliance interface.',
+          });
+          if (data.html) {
+            const printWindow = window.open('', '_blank');
+            if (printWindow) {
+              printWindow.document.open();
+              printWindow.document.write(data.html);
+              printWindow.document.close();
+              printWindow.onload = function() {
+                printWindow.print();
+              };
+              showToast('Print window launched for PDF export', 'success');
+            } else {
+              downloadFile(data.html, `${fname}.html`, 'text/html');
+              showToast('Pop-up blocked. HTML report downloaded instead.', 'warning');
+            }
+          } else {
+            throw new Error('No HTML report content received');
+          }
+        }
+      } catch (err) {
+        console.error('Export error, using offline generator:', err);
+        // Offline demo generators
+        if (fmt === 'JSON') {
+          const reportJson = JSON.stringify({
+            title: `Sentinel Regulatory Analysis: ${threat} (Demo Mode)`,
+            risk_category: threat,
+            severity: 'High',
+            justification: 'Offline generated demo report.',
+            timestamp: new Date().toISOString()
+          }, null, 2);
+          downloadFile(reportJson, `${fname}.json`, 'application/json');
+        } else if (fmt === 'Markdown') {
+          const mockMd = `# Sentinel Regulatory Analysis: ${threat} (Demo Mode)\n\nGenerated offline. Connect backend to retrieve full legal compliance mappings.`;
+          downloadFile(mockMd, `${fname}.md`, 'text/markdown');
+        } else {
+          // HTML or PDF fallback
+          const mockHtml = `<html><head><title>Offline Report</title></head><body style="font-family:sans-serif;padding:40px;background:#0b0c10;color:#c9d1d9;"><h1>Offline Regulatory Analysis: ${threat}</h1><p>Offline generated report. Launch Render backend to retrieve full legal mappings.</p></body></html>`;
+          if (fmt === 'PDF') {
+            const printWindow = window.open('', '_blank');
+            if (printWindow) {
+              printWindow.document.write(mockHtml);
+              printWindow.document.close();
+              printWindow.print();
+            } else {
+              downloadFile(mockHtml, `${fname}.html`, 'text/html');
+            }
+          } else {
+            downloadFile(mockHtml, `${fname}.html`, 'text/html');
+          }
+        }
+        showToast('Backend offline — downloading offline demo report', 'warning');
       } finally {
         clearBtnLoading(exportBtn);
       }
@@ -792,6 +902,18 @@ function escHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+/** Trigger a browser file download of text/binary content */
+function downloadFile(content, fileName, contentType) {
+  const a = document.createElement("a");
+  const file = new Blob([content], { type: contentType });
+  a.href = URL.createObjectURL(file);
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
 }
 
 /** Debounce helper */
