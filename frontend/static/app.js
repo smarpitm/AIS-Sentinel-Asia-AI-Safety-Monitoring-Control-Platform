@@ -1992,7 +1992,7 @@ function initCardZoom() {
   }
 
   document.addEventListener('click', (e) => {
-    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea') || e.target.closest('.toast') || e.target.closest('#toast-container')) {
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea') || e.target.closest('.toast') || e.target.closest('#toast-container') || e.target.closest('.view-details-trigger')) {
       return;
     }
 
@@ -2021,4 +2021,40 @@ function closeCardZoom() {
     overlay.classList.remove('active');
   }
 }
+
+window.openAlertDetailsModal = function(title, region, category, confidence, fullArticle, justification) {
+  const overlay = document.getElementById('card-modal-overlay');
+  const inner = document.getElementById('card-modal-inner');
+  if (!overlay || !inner) return;
+
+  inner.innerHTML = `
+    <div class="modal-alert-details" style="text-align: left; display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <span class="badge" style="background:rgba(255, 42, 133, 0.15); color:#ff2a85; font-size:11px; margin-bottom:8px; display:inline-block; border: 1px solid rgba(255, 42, 133, 0.3); padding: 4px 10px; border-radius: 9999px;">${escHtml(region)}</span>
+        <h3 style="font-size:18px; font-weight:700; line-height:1.4; color:var(--text-primary); margin:0;">${escHtml(title)}</h3>
+      </div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:120px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:var(--radius-md); padding:10px 14px;">
+          <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; margin-bottom:4px;">Risk Category</div>
+          <div style="font-size:14px; font-weight:600; color:var(--accent-primary);">${escHtml(category)}</div>
+        </div>
+        <div style="flex:1; min-width:120px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:var(--radius-md); padding:10px 14px;">
+          <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; margin-bottom:4px;">Confidence</div>
+          <div style="font-size:18px; font-weight:700; color:var(--color-success);">${escHtml(confidence)}</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; background:rgba(255,255,255,0.01); border-radius:var(--radius-md); padding:16px; border:1px solid rgba(255,255,255,0.03);">
+        <div>
+          <div style="font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Full Article Analysis</div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.6;">${escHtml(fullArticle)}</div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.05); padding-top:12px;">
+          <div style="font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Justification</div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.6;">${escHtml(justification)}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  overlay.classList.add('active');
+};
 
