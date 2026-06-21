@@ -177,6 +177,20 @@ async function apiGet(endpoint) {
     }
     return await res.json();
   } catch (err) {
+    if (API_ROOT !== 'http://127.0.0.1:8000/api' && API_ROOT !== 'http://localhost:8000/api') {
+      try {
+        console.warn(`[apiGet] Primary API failed. Retrying with backup localhost port 8000: http://127.0.0.1:8000/api${endpoint}`);
+        const res = await fetch(`http://127.0.0.1:8000/api${endpoint}`, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (backupErr) {
+        console.error('[apiGet] Backup endpoint failed:', backupErr);
+      }
+    }
     console.error(`[apiGet] ${endpoint}`, err);
     throw err;
   }
@@ -204,6 +218,24 @@ async function apiPost(endpoint, data) {
     }
     return await res.json();
   } catch (err) {
+    if (API_ROOT !== 'http://127.0.0.1:8000/api' && API_ROOT !== 'http://localhost:8000/api') {
+      try {
+        console.warn(`[apiPost] Primary API failed. Retrying with backup localhost port 8000: http://127.0.0.1:8000/api${endpoint}`);
+        const res = await fetch(`http://127.0.0.1:8000/api${endpoint}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept':       'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (backupErr) {
+        console.error('[apiPost] Backup endpoint failed:', backupErr);
+      }
+    }
     console.error(`[apiPost] ${endpoint}`, err);
     throw err;
   }
@@ -844,34 +876,6 @@ function initSafetyBench() {
     });
   }
 
-  // Tab switching
-  document.querySelectorAll('.sb-tab').forEach(t => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.sb-tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      const tabName = t.dataset.tab;
-
-      const leaderboardCard = document.getElementById('sb-leaderboard-card');
-      const chartsGrid = document.getElementById('sb-charts-grid');
-      const deepdiveGrid = document.getElementById('sb-deepdive-grid');
-
-      if (!leaderboardCard || !chartsGrid || !deepdiveGrid) return;
-
-      if (tabName === 'leaderboard') {
-        leaderboardCard.style.display = 'block';
-        chartsGrid.style.display = 'grid';
-        deepdiveGrid.style.display = 'grid';
-      } else if (tabName === 'breakdown') {
-        leaderboardCard.style.display = 'block';
-        chartsGrid.style.display = 'grid';
-        deepdiveGrid.style.display = 'none';
-      } else if (tabName === 'languages') {
-        leaderboardCard.style.display = 'none';
-        chartsGrid.style.display = 'grid';
-        deepdiveGrid.style.display = 'grid';
-      }
-    });
-  });
 }
 
 function updateVietnameseDeepDive() {

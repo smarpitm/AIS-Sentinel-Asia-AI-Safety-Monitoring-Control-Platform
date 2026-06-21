@@ -10,8 +10,37 @@ st.components.v1.html() call — no separate file server required.
 import os
 import re
 import json
+import subprocess
+import socket
+import sys
 import streamlit as st
 import streamlit.components.v1 as components
+
+# Auto-start FastAPI server on port 8000 if not already running
+def is_port_in_use(port):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(0.5)
+            return s.connect_ex(('127.0.0.1', port)) == 0
+    except Exception:
+        return False
+
+if not is_port_in_use(8000):
+    try:
+        venv_bin = os.path.dirname(sys.executable)
+        uvicorn_cmd = os.path.join(venv_bin, "uvicorn")
+        if not os.path.exists(uvicorn_cmd) and not os.path.exists(uvicorn_cmd + ".exe"):
+            uvicorn_cmd = "uvicorn"
+            
+        subprocess.Popen(
+            [uvicorn_cmd, "api.main:app", "--port", "8000"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            close_fds=True if os.name != 'nt' else False
+        )
+        print("[app.py] Auto-started FastAPI API server on port 8000 in the background.")
+    except Exception as e:
+        print(f"[app.py] Could not auto-start FastAPI server: {e}")
 
 # Load Streamlit Secrets into environment variables for standard modules (e.g. GEMINI_API_KEY)
 try:
