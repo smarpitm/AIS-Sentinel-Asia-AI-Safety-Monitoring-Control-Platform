@@ -201,7 +201,12 @@ class TornadoAPIHandler(TornadoRequestHandler):
     def post(self, endpoint):
         try:
             body = json.loads(self.request.body) if self.request.body else {}
-            if endpoint.startswith("agentguard/design"):
+            if endpoint.startswith("intelstream/evaluate"):
+                from modules.intelstream.evaluator import ThreatEvaluator
+                evaluator = ThreatEvaluator()
+                result = evaluator.evaluate(body.get("article_text", ""), article_title=body.get("article_title", ""))
+                self.write(result)
+            elif endpoint.startswith("agentguard/design"):
                 from core.llm_client import GeminiClient
                 from modules.agentguard.agent import CreativeAgent
                 from core.database import insert_agent_log
