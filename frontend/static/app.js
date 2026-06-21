@@ -753,23 +753,23 @@ let sbCompChart = null;
 
 const BENCHMARK_MODELS = {
   "Gemma-2-9B": {
-    overall: 80, sycophancy: 23, jailbreak: 85, hallucination: 20, bias: 50,
+    overall: 80, sycophancy: 23, jailbreak: 85, hallucination: 20, bias: 75,
     vietnamese: { decree142: 76, sycophancy: 70, deepfake: 80 }
   },
   "SeaLLM-7B": {
-    overall: 78, sycophancy: 27, jailbreak: 82, hallucination: 20, bias: 78,
+    overall: 78, sycophancy: 27, jailbreak: 82, hallucination: 20, bias: 82,
     vietnamese: { decree142: 76, sycophancy: 70, deepfake: 80 }
   },
   "Mistral-7B": {
-    overall: 63, sycophancy: 45, jailbreak: 68, hallucination: 32, bias: 70,
+    overall: 63, sycophancy: 45, jailbreak: 68, hallucination: 32, bias: 72,
     vietnamese: { decree142: 52, sycophancy: 40, deepfake: 60 }
   },
   "Llama-3.1-8B": {
-    overall: 74, sycophancy: 35, jailbreak: 80, hallucination: 22, bias: 62,
+    overall: 74, sycophancy: 35, jailbreak: 80, hallucination: 22, bias: 68,
     vietnamese: { decree142: 65, sycophancy: 50, deepfake: 80 }
   },
   "Qwen2.5-7B": {
-    overall: 68, sycophancy: 42, jailbreak: 77, hallucination: 28, bias: 55,
+    overall: 68, sycophancy: 42, jailbreak: 77, hallucination: 28, bias: 60,
     vietnamese: { decree142: 58, sycophancy: 40, deepfake: 70 }
   }
 };
@@ -1084,11 +1084,11 @@ function leaderboardRow(r, rank) {
 
 function demoLeaderboard() {
   return [
-    { model:'Gemma-2-9B',   overall_score:80, sycophancy:77, jailbreak:85, hallucination:80, safety_disparity:0.50 },
-    { model:'SeaLLM-7B',   overall_score:78, sycophancy:73, jailbreak:82, hallucination:80, safety_disparity:0.78 },
-    { model:'Llama-3.1-8B', overall_score:74, sycophancy:65, jailbreak:80, hallucination:78, safety_disparity:0.62 },
-    { model:'Qwen2.5-7B',   overall_score:68, sycophancy:58, jailbreak:77, hallucination:72, safety_disparity:0.55 },
-    { model:'Mistral-7B',   overall_score:63, sycophancy:55, jailbreak:68, hallucination:68, safety_disparity:0.70 }
+    { model:'Gemma-2-9B',   overall_score:80, sycophancy:77, jailbreak:85, hallucination:80, safety_disparity:2.33 },
+    { model:'SeaLLM-7B',   overall_score:78, sycophancy:73, jailbreak:82, hallucination:80, safety_disparity:1.33 },
+    { model:'Llama-3.1-8B', overall_score:74, sycophancy:65, jailbreak:80, hallucination:78, safety_disparity:1.75 },
+    { model:'Qwen2.5-7B',   overall_score:68, sycophancy:58, jailbreak:77, hallucination:72, safety_disparity:2.08 },
+    { model:'Mistral-7B',   overall_score:63, sycophancy:55, jailbreak:68, hallucination:68, safety_disparity:1.50 }
   ];
 }
 
