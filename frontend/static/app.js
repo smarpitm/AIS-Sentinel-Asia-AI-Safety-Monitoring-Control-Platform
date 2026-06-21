@@ -45,6 +45,7 @@ let currentPage = null;
 let lastGeneratedBriefHtml = null;
 let loadedArticles = [];
 window.activeThreatCategory = 'Biosecurity';
+window.showAllArticles = false;
 
 // ============================================================
 // Theme Toggle
@@ -583,11 +584,40 @@ function filterAndRenderArticles() {
         <div class="empty-state-title">No matching articles</div>
         <div class="empty-state-text">Adjust your filters to see active threats.</div>
       </div>`;
+    const visibleCountEl = document.getElementById('is-visible-count');
+    const totalCountEl = document.getElementById('is-total-count');
+    const viewAllBtn = document.getElementById('is-view-all-btn');
+    if (visibleCountEl) visibleCountEl.textContent = '0';
+    if (totalCountEl) totalCountEl.textContent = '0';
+    if (viewAllBtn) viewAllBtn.style.display = 'none';
     return;
   }
 
-  grid.innerHTML = filtered.slice(0, 6).map(a => articleCard(a)).join('');
+  const visibleArticles = window.showAllArticles ? filtered : filtered.slice(0, 6);
+  grid.innerHTML = visibleArticles.map(a => articleCard(a)).join('');
+
+  // Update visible counts
+  const visibleCountEl = document.getElementById('is-visible-count');
+  const totalCountEl = document.getElementById('is-total-count');
+  const viewAllBtn = document.getElementById('is-view-all-btn');
+
+  if (visibleCountEl) visibleCountEl.textContent = visibleArticles.length;
+  if (totalCountEl) totalCountEl.textContent = filtered.length;
+
+  if (viewAllBtn) {
+    if (filtered.length <= 6) {
+      viewAllBtn.style.display = 'none';
+    } else {
+      viewAllBtn.style.display = 'inline-flex';
+      viewAllBtn.textContent = window.showAllArticles ? 'Show Less' : 'View All →';
+    }
+  }
 }
+
+window.toggleViewAllArticles = function() {
+  window.showAllArticles = !window.showAllArticles;
+  filterAndRenderArticles();
+};
 
 function severityBadgeClass(severity) {
   const s = (severity || '').toLowerCase();

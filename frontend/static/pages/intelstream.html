@@ -21,7 +21,7 @@
   <div class="page-actions">
     <span class="badge badge-success">
       <span style="width:6px;height:6px;background:currentColor;border-radius:50%;display:inline-block;margin-right:4px;"></span>
-      Live Feed Active
+      Real-Time Intel
     </span>
     <span class="badge badge-info">Asia-Pacific Coverage</span>
     <span class="badge badge-neutral">Updated: Just now</span>
@@ -139,8 +139,8 @@
 
     <!-- Pagination hint -->
     <div class="flex items-center justify-between mt-16" style="color:var(--text-muted);font-size:12px;">
-      <span>Showing 6 of 2,847 articles</span>
-      <button class="btn btn-sm btn-ghost">View All →</button>
+      <span id="is-pagination-text">Showing <strong id="is-visible-count">0</strong> of <strong id="is-total-count">0</strong> articles</span>
+      <button class="btn btn-sm btn-ghost" id="is-view-all-btn" onclick="toggleViewAllArticles()">View All →</button>
     </div>
   </div>
 
@@ -229,7 +229,7 @@
     <div class="card control-card">
       <div class="card-header">
         <div class="card-title">Threat Origin Heatmap</div>
-        <span class="badge badge-danger" style="animation: livePulse 2s infinite;">Live Tracking</span>
+        <span class="badge badge-danger" style="animation: livePulse 2s infinite;">Active Tracking</span>
       </div>
       <div class="chart-container" style="position:relative;height:180px;background:rgba(0,0,0,0.2);border-radius:var(--radius-md);border:1px solid var(--border-subtle);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:0;">
         
