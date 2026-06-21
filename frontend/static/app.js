@@ -752,25 +752,25 @@ let sbRadarChart = null;
 let sbCompChart = null;
 
 const BENCHMARK_MODELS = {
-  "Claude-3.5-Sonnet": {
-    overall: 91, sycophancy: 12, jailbreak: 95, hallucination: 10, bias: 78,
-    vietnamese: { decree142: 85, sycophancy: 82, deepfake: 88 }
+  "Gemma-2-9B": {
+    overall: 80, sycophancy: 23, jailbreak: 85, hallucination: 20, bias: 50,
+    vietnamese: { decree142: 76, sycophancy: 70, deepfake: 80 }
   },
-  "Gemini-1.5-Pro": {
-    overall: 88, sycophancy: 18, jailbreak: 92, hallucination: 15, bias: 84,
-    vietnamese: { decree142: 80, sycophancy: 78, deepfake: 85 }
+  "SeaLLM-7B": {
+    overall: 78, sycophancy: 27, jailbreak: 82, hallucination: 20, bias: 78,
+    vietnamese: { decree142: 76, sycophancy: 70, deepfake: 80 }
   },
-  "GPT-4o": {
-    overall: 84, sycophancy: 22, jailbreak: 85, hallucination: 18, bias: 70,
-    vietnamese: { decree142: 75, sycophancy: 72, deepfake: 80 }
+  "Mistral-7B": {
+    overall: 63, sycophancy: 45, jailbreak: 68, hallucination: 32, bias: 70,
+    vietnamese: { decree142: 52, sycophancy: 40, deepfake: 60 }
   },
-  "Llama-3.1-70B": {
-    overall: 76, sycophancy: 38, jailbreak: 82, hallucination: 26, bias: 65,
-    vietnamese: { decree142: 70, sycophancy: 65, deepfake: 72 }
+  "Llama-3.1-8B": {
+    overall: 74, sycophancy: 35, jailbreak: 80, hallucination: 22, bias: 62,
+    vietnamese: { decree142: 65, sycophancy: 50, deepfake: 80 }
   },
-  "Qwen2.5-72B": {
-    overall: 71, sycophancy: 46, jailbreak: 75, hallucination: 32, bias: 58,
-    vietnamese: { decree142: 60, sycophancy: 58, deepfake: 65 }
+  "Qwen2.5-7B": {
+    overall: 68, sycophancy: 42, jailbreak: 77, hallucination: 28, bias: 55,
+    vietnamese: { decree142: 58, sycophancy: 40, deepfake: 70 }
   }
 };
 
@@ -875,8 +875,8 @@ function initSafetyBench() {
 
 function updateVietnameseDeepDive() {
   const modelSel = document.getElementById('sb-model');
-  const model = modelSel ? modelSel.value : 'Claude 3.7 Sonnet';
-  const data = BENCHMARK_MODELS[model] || BENCHMARK_MODELS["Claude 3.7 Sonnet"];
+  const model = modelSel ? modelSel.value : 'Gemma-2-9B';
+  const data = BENCHMARK_MODELS[model] || BENCHMARK_MODELS["Gemma-2-9B"];
   const viet = data.vietnamese;
 
   const labels = [
@@ -922,12 +922,12 @@ function renderRadarChart() {
         Math.round(raw.overall * factor)
       ],
       fill: true,
-      backgroundColor: modelName.includes('Claude') ? 'rgba(99, 102, 241, 0.15)' : 'rgba(0, 217, 255, 0.15)',
-      borderColor: modelName.includes('Claude') ? '#6366f1' : '#00d9ff',
-      pointBackgroundColor: modelName.includes('Claude') ? '#6366f1' : '#00d9ff',
+      backgroundColor: modelName.includes('Gemma') ? 'rgba(99, 102, 241, 0.15)' : 'rgba(0, 217, 255, 0.15)',
+      borderColor: modelName.includes('Gemma') ? '#6366f1' : '#00d9ff',
+      pointBackgroundColor: modelName.includes('Gemma') ? '#6366f1' : '#00d9ff',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: modelName.includes('Claude') ? '#6366f1' : '#00d9ff'
+      pointHoverBorderColor: modelName.includes('Gemma') ? '#6366f1' : '#00d9ff'
     };
   });
 
@@ -968,11 +968,11 @@ function renderComparisonChart() {
     sbCompChart.destroy();
   }
 
-  const modelA = document.getElementById('sb-comp-a')?.value || 'Claude-3.5-Sonnet';
-  const modelB = document.getElementById('sb-comp-b')?.value || 'GPT-4o';
+  const modelA = document.getElementById('sb-comp-a')?.value || 'Gemma-2-9B';
+  const modelB = document.getElementById('sb-comp-b')?.value || 'SeaLLM-7B';
 
-  const rawA = BENCHMARK_MODELS[modelA] || BENCHMARK_MODELS["Claude-3.5-Sonnet"];
-  const rawB = BENCHMARK_MODELS[modelB] || BENCHMARK_MODELS["GPT-4o"];
+  const rawA = BENCHMARK_MODELS[modelA] || BENCHMARK_MODELS["Gemma-2-9B"];
+  const rawB = BENCHMARK_MODELS[modelB] || BENCHMARK_MODELS["SeaLLM-7B"];
 
   const dataA = [100 - rawA.sycophancy, rawA.bias, rawA.jailbreak, 100 - rawA.hallucination, rawA.overall];
   const dataB = [100 - rawB.sycophancy, rawB.bias, rawB.jailbreak, 100 - rawB.hallucination, rawB.overall];
@@ -1084,11 +1084,11 @@ function leaderboardRow(r, rank) {
 
 function demoLeaderboard() {
   return [
-    { model:'Claude-3.5-Sonnet', overall_score:91, sycophancy:88, jailbreak:95, hallucination:90, safety_disparity:2.43 },
-    { model:'Gemini-1.5-Pro',    overall_score:88, sycophancy:82, jailbreak:92, hallucination:85, safety_disparity:2.18 },
-    { model:'GPT-4o',            overall_score:84, sycophancy:78, jailbreak:85, hallucination:82, safety_disparity:2.32 },
-    { model:'Llama-3.1-70B',     overall_score:76, sycophancy:62, jailbreak:82, hallucination:74, safety_disparity:2.06 },
-    { model:'Qwen2.5-72B',       overall_score:71, sycophancy:54, jailbreak:75, hallucination:68, safety_disparity:2.11 }
+    { model:'Gemma-2-9B',   overall_score:80, sycophancy:77, jailbreak:85, hallucination:80, safety_disparity:0.50 },
+    { model:'SeaLLM-7B',   overall_score:78, sycophancy:73, jailbreak:82, hallucination:80, safety_disparity:0.78 },
+    { model:'Llama-3.1-8B', overall_score:74, sycophancy:65, jailbreak:80, hallucination:78, safety_disparity:0.62 },
+    { model:'Qwen2.5-7B',   overall_score:68, sycophancy:58, jailbreak:77, hallucination:72, safety_disparity:0.55 },
+    { model:'Mistral-7B',   overall_score:63, sycophancy:55, jailbreak:68, hallucination:68, safety_disparity:0.70 }
   ];
 }
 
@@ -1325,6 +1325,9 @@ function initAgentGuard() {
       }, 1000);
     });
   }
+
+  // Render Pareto chart on page load
+  renderParetoChart();
 }
 
 function renderSlide(container, slide, result) {
@@ -1355,29 +1358,39 @@ function renderDemoSlide(container, scenario, task) {
 function renderParetoChart() {
   const ctx = document.getElementById('ag-pareto-chart');
   if (!ctx) return;
+  if (typeof Chart === 'undefined') {
+    console.warn("Chart.js is not loaded.");
+    return;
+  }
   if (agParetoChart) agParetoChart.destroy();
   agParetoChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['0.00', '0.01', '0.05', '0.20', '0.35'],
       datasets: [
         {
-          label: 'Detection Rate (TPR)',
-          data: [0.60, 0.75, 0.88, 0.95, 0.98],
+          label: 'Pareto Tradeoff (TPR vs FPR)',
+          data: [
+            { x: 0.00, y: 0.60, label: '90' },
+            { x: 0.01, y: 0.75, label: '80' },
+            { x: 0.05, y: 0.88, label: '70' },
+            { x: 0.20, y: 0.95, label: '60' },
+            { x: 0.35, y: 0.98, label: '50' }
+          ],
           borderColor: '#6366f1',
           backgroundColor: 'rgba(99, 102, 241, 0.1)',
           borderWidth: 2,
           tension: 0.3,
-          fill: true
+          fill: true,
+          showLine: true
         },
         {
-          label: 'False Positive Rate (FPR)',
-          data: [0.00, 0.01, 0.05, 0.20, 0.35],
+          label: 'Optimal Threshold (70)',
+          data: [{ x: 0.05, y: 0.88 }],
           borderColor: '#f43f5e',
-          backgroundColor: 'transparent',
-          borderWidth: 2,
-          borderDash: [5, 5],
-          tension: 0.1
+          backgroundColor: '#f43f5e',
+          pointRadius: 7,
+          pointHoverRadius: 9,
+          showLine: false
         }
       ]
     },
@@ -1387,18 +1400,34 @@ function renderParetoChart() {
       plugins: {
         legend: {
           labels: { color: '#94a3b8', font: { size: 10 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const point = context.raw;
+              if (point.label) {
+                return `Threshold ${point.label}: FPR ${point.x}, TPR ${point.y}`;
+              }
+              return `Optimal Threshold (70): FPR ${point.x}, TPR ${point.y}`;
+            }
+          }
         }
       },
       scales: {
         x: {
+          type: 'linear',
+          position: 'bottom',
           grid: { color: 'rgba(255,255,255,0.05)' },
           ticks: { color: '#94a3b8', font: { size: 10 } },
-          title: { display: true, text: 'False Positive Rate (FPR)', color: '#94a3b8', font: { size: 10 } }
+          title: { display: true, text: 'False Positive Rate (FPR)', color: '#94a3b8', font: { size: 10 } },
+          min: 0,
+          max: 0.4
         },
         y: {
           grid: { color: 'rgba(255,255,255,0.05)' },
           ticks: { color: '#94a3b8', font: { size: 10 } },
-          min: 0,
+          title: { display: true, text: 'Detection Rate (TPR)', color: '#94a3b8', font: { size: 10 } },
+          min: 0.5,
           max: 1.0
         }
       }
@@ -1500,6 +1529,143 @@ function initPolicyBridge() {
     }).join('');
   }
 
+  const OFFLINE_LAWS = {
+    'AI-EngBio integration': [
+      {
+        jurisdiction: 'Vietnam',
+        law_name: 'Law 134/2025 (AI Law)',
+        article: 'Article 12',
+        requirement: 'Strict registration and mandatory risk assessment for AI models integrated with biological sequence design tools.',
+        penalty: 'Administrative fine up to 500,000,000 VND and immediate suspension of model deployment.',
+        effective_date: '2025-06-01'
+      },
+      {
+        jurisdiction: 'EU',
+        law_name: 'EU AI Act',
+        article: 'Article 6',
+        requirement: 'High-risk classification requiring independent third-party safety audits for dual-use biotechnology AI applications.',
+        penalty: 'Administrative fines up to 35,000,000 EUR or 7% of global annual turnover, whichever is higher.',
+        effective_date: '2026-08-01'
+      },
+      {
+        jurisdiction: 'India',
+        law_name: 'MeitY AI frameworks',
+        article: 'Section 4(c)',
+        requirement: 'Mandatory biosecurity alignment check and threat reporting before publishing open-weight biological design models.',
+        penalty: 'Revocation of digital commercial authorization and administrative sanctions.',
+        effective_date: '2025-12-01'
+      }
+    ],
+    'Dual-use hardware': [
+      {
+        jurisdiction: 'Vietnam',
+        law_name: 'Decree 142/2026 (Human-in-the-Loop)',
+        article: 'Article 8',
+        requirement: 'Mandatory human-in-the-loop supervisor override mechanism for all generative foundation models deployed in public services.',
+        penalty: 'Fines up to 200,000,000 VND and mandatory public model recall.',
+        effective_date: '2026-01-01'
+      },
+      {
+        jurisdiction: 'EU',
+        law_name: 'EU AI Act',
+        article: 'Article 9',
+        requirement: 'Establish a risk management system to identify, evaluate, and mitigate safety risks throughout the AI system lifecycle.',
+        penalty: 'Administrative fines up to 30,000,000 EUR or 6% of global annual turnover.',
+        effective_date: '2026-08-01'
+      }
+    ],
+    'Policy gap': [
+      {
+        jurisdiction: 'EU',
+        law_name: 'EU AI Act',
+        article: 'Article 9',
+        requirement: 'Establish a risk management system to identify, evaluate, and mitigate safety risks throughout the AI system lifecycle.',
+        penalty: 'Administrative fines up to 30,000,000 EUR or 6% of global annual turnover.',
+        effective_date: '2026-08-01'
+      }
+    ],
+    'Data sovereignty risk': [
+      {
+        jurisdiction: 'India',
+        law_name: 'Digital Personal Data Protection Act (DPDP)',
+        article: 'Section 6',
+        requirement: 'Obtain explicit consent before utilizing personal data to train large language models or processing individual user interactions.',
+        penalty: 'Administrative fine up to 250 Crore INR (2.5 billion INR).',
+        effective_date: '2024-09-01'
+      },
+      {
+        jurisdiction: 'Singapore',
+        law_name: 'Personal Data Protection Act (PDPA)',
+        article: 'Section 20',
+        requirement: 'Implement data protection frameworks and masking to prevent personal data from being stored or exposed in generative AI prompt logs.',
+        penalty: 'Financial penalty up to 1,000,000 SGD or 10% of local annual turnover, whichever is higher.',
+        effective_date: '2021-02-01'
+      },
+      {
+        jurisdiction: 'Indonesia',
+        law_name: 'Personal Data Protection Law (PDP Law)',
+        article: 'Article 28',
+        requirement: 'Process personal data lawfully for automated decision making; provide individuals with the right to request human override review.',
+        penalty: 'Administrative fine up to 2% of annual revenues and potential criminal penalties up to 6 years imprisonment.',
+        effective_date: '2024-10-17'
+      },
+      {
+        jurisdiction: 'EU',
+        law_name: 'EU AI Act',
+        article: 'Article 9',
+        requirement: 'Establish a risk management system to identify, evaluate, and mitigate safety risks throughout the AI system lifecycle.',
+        penalty: 'Administrative fines up to 30,000,000 EUR or 6% of global annual turnover.',
+        effective_date: '2026-08-01'
+      }
+    ]
+  };
+
+  function renderLaws(laws) {
+    const container = document.getElementById('pb-laws-container');
+    const card = document.getElementById('pb-frameworks-card');
+    if (!container || !card) return;
+    if (!laws || laws.length === 0) {
+      card.style.display = 'none';
+      return;
+    }
+    card.style.display = 'block';
+    container.innerHTML = laws.map(l => {
+      const countryFlag = {
+        'Vietnam': '🇻🇳',
+        'India': '🇮🇳',
+        'Singapore': '🇸🇬',
+        'Indonesia': '🇮🇩',
+        'EU': '🇪🇺'
+      }[l.jurisdiction] || '🌐';
+      return `
+        <details class="law-expander" open style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px; background: rgba(255,255,255,0.01); margin-bottom: 10px;">
+          <summary style="font-weight: 600; color: var(--text-primary); cursor: pointer; user-select: none;">
+            ${countryFlag} ${escHtml(l.jurisdiction)} — ${escHtml(l.law_name)}
+          </summary>
+          <div style="margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--text-secondary); display: flex; flex-direction: column; gap: 6px; padding-left: 12px; border-left: 2px solid var(--accent-primary);">
+            <div><strong>Article/Section:</strong> ${escHtml(l.article)}</div>
+            <div><strong>Requirement:</strong> ${escHtml(l.requirement)}</div>
+            <div><strong>Effective Date:</strong> ${escHtml(l.effective_date)}</div>
+            <div><strong style="color: var(--accent-danger);">Penalty:</strong> ${escHtml(l.penalty)}</div>
+          </div>
+        </details>
+      `;
+    }).join('');
+  }
+
+  async function fetchAndRenderLaws(threat) {
+    try {
+      const data = await apiPost('/policybridge/map', { risk_category: threat });
+      if (data && data.laws) {
+        renderLaws(data.laws);
+      } else {
+        renderLaws(OFFLINE_LAWS[threat] || []);
+      }
+    } catch (_) {
+      renderLaws(OFFLINE_LAWS[threat] || []);
+    }
+  }
+
   function updateVector() {
     if (!threatSel || !vectorCard) return;
     const threat = THREAT_DATA[threatSel.value];
@@ -1509,6 +1675,7 @@ function initPolicyBridge() {
     const jContainer = document.getElementById('pb-jurisdictions');
     jContainer.innerHTML = threat.jurisdictions.map(j => `<span class="jurisdiction-tag">${escHtml(j)}</span>`).join('');
     updateComparisonMatrix(threatSel.value);
+    fetchAndRenderLaws(threatSel.value);
   }
 
   if (threatSel) {
@@ -1533,12 +1700,18 @@ function initPolicyBridge() {
 
   if (mapBtn) {
     mapBtn.addEventListener('click', async () => {
-      const threat = threatSel ? threatSel.value : 'Biosecurity';
+      const threat = threatSel ? threatSel.value : 'AI-EngBio integration';
       setBtnLoading(mapBtn, 'Mapping…');
       try {
-        await apiPost('/policybridge/map', { risk_category: threat });
+        const data = await apiPost('/policybridge/map', { risk_category: threat });
+        if (data && data.laws) {
+          renderLaws(data.laws);
+        } else {
+          renderLaws(OFFLINE_LAWS[threat] || []);
+        }
         showToast(`Policy map generated for: ${threat}`, 'success');
       } catch (_) {
+        renderLaws(OFFLINE_LAWS[threat] || []);
         showToast('Using offline policy database', 'warning');
       } finally {
         clearBtnLoading(mapBtn);
