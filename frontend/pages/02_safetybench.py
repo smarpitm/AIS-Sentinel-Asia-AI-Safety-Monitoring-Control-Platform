@@ -114,9 +114,8 @@ def load_data() -> pd.DataFrame:
         pass
     return pd.DataFrame(DEMO_RESULTS)
 
-# Load data into session state
-if "benchmark_data" not in st.session_state:
-    st.session_state.benchmark_data = load_data()
+# Load data freshly to avoid stale cached values in session state
+st.session_state.benchmark_data = load_data()
 
 df = st.session_state.benchmark_data
 
