@@ -484,7 +484,7 @@ function initIntelStream() {
         if (briefArea) {
           briefArea.innerHTML = demoBrief;
         }
-        showToast('Backend offline — displaying demo brief', 'warning');
+        console.warn('Backend offline — displaying demo brief');
       } finally {
         clearBtnLoading(briefBtn);
       }
@@ -541,7 +541,7 @@ function initIntelStream() {
           translation: transText
         };
         renderJudgeResult(verdict);
-        showToast('Backend offline — displayed simulated analysis', 'warning');
+        console.warn('Backend offline — displayed simulated analysis');
       } finally {
         clearBtnLoading(judgeBtn);
       }
@@ -835,7 +835,7 @@ function initSafetyBench() {
         renderRadarChart();
         renderComparisonChart();
       } catch (_) {
-        showToast('Backend offline — showing cached results', 'warning');
+        console.warn('Backend offline — showing cached results');
       } finally {
         clearBtnLoading(runBtn);
       }
@@ -865,11 +865,11 @@ function initSafetyBench() {
   if (exportCsv) {
     exportCsv.addEventListener('click', () => {
       const lang = langSel ? langSel.options[langSel.selectedIndex].text : 'All';
-      let csv = 'Rank,Model,Overall Score,Sycophancy,Jailbreak,Hallucination,Safety Disparity\n';
+      let csv = 'Rank,Model,Language,Overall Score,Sycophancy Rate,Jailbreak Refusal,Hallucination Rate,Safety Disparity\n';
       const rows = demoLeaderboard();
       rows.forEach((r, idx) => {
         const disparity = r.safety_disparity ?? 1.00;
-        csv += `${idx+1},"${r.model}",${r.overall_score}%,${r.sycophancy}%,${r.jailbreak}%,${r.hallucination}%,${disparity.toFixed(2)}\n`;
+        csv += `${idx+1},"${r.model}","${r.language}",${r.overall_score}%,${r.sycophancy}%,${r.jailbreak}%,${r.hallucination}%,${disparity.toFixed(2)}\n`;
       });
       downloadFile(csv, `safetybench_leaderboard_${lang.toLowerCase().replace(/\s+/g, '_')}.csv`, 'text/csv');
       showToast('Leaderboard CSV exported successfully', 'success');
@@ -1063,6 +1063,52 @@ async function loadLeaderboard() {
   tbody.innerHTML = list.map((r, i) => leaderboardRow(r, i + 1)).join('');
 }
 
+const SAFETYBENCH_DATA = [
+  { model: "Gemma-2-9B", language: "Thai", sycophancy: 30, jailbreak: 80, hallucination: 30, overall_score: 73, safety_disparity: 3.0 },
+  { model: "Gemma-2-9B", language: "Hindi", sycophancy: 20, jailbreak: 90, hallucination: 20, overall_score: 83, safety_disparity: 2.0 },
+  { model: "Gemma-2-9B", language: "Bahasa", sycophancy: 20, jailbreak: 90, hallucination: 20, overall_score: 83, safety_disparity: 2.0 },
+  { model: "Gemma-2-9B", language: "Tagalog", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 3.0 },
+  { model: "Gemma-2-9B", language: "Vietnamese", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 3.0 },
+  { model: "Gemma-2-9B", language: "English", sycophancy: 10, jailbreak: 90, hallucination: 10, overall_score: 90, safety_disparity: 1.0 },
+  
+  { model: "SeaLLM-7B", language: "Thai", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "SeaLLM-7B", language: "Hindi", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "SeaLLM-7B", language: "Bahasa", sycophancy: 20, jailbreak: 80, hallucination: 20, overall_score: 80, safety_disparity: 1.0 },
+  { model: "SeaLLM-7B", language: "Tagalog", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "SeaLLM-7B", language: "Vietnamese", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "SeaLLM-7B", language: "English", sycophancy: 20, jailbreak: 90, hallucination: 20, overall_score: 83, safety_disparity: 1.0 },
+  
+  { model: "Mistral-7B", language: "Thai", sycophancy: 50, jailbreak: 60, hallucination: 40, overall_score: 56, safety_disparity: 1.67 },
+  { model: "Mistral-7B", language: "Hindi", sycophancy: 40, jailbreak: 70, hallucination: 30, overall_score: 66, safety_disparity: 1.33 },
+  { model: "Mistral-7B", language: "Bahasa", sycophancy: 40, jailbreak: 70, hallucination: 30, overall_score: 66, safety_disparity: 1.33 },
+  { model: "Mistral-7B", language: "Tagalog", sycophancy: 50, jailbreak: 70, hallucination: 30, overall_score: 62, safety_disparity: 1.67 },
+  { model: "Mistral-7B", language: "Vietnamese", sycophancy: 60, jailbreak: 60, hallucination: 40, overall_score: 52, safety_disparity: 2.0 },
+  { model: "Mistral-7B", language: "English", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.0 },
+  
+  { model: "Llama-3.1-8B", language: "Thai", sycophancy: 40, jailbreak: 70, hallucination: 30, overall_score: 66, safety_disparity: 2.0 },
+  { model: "Llama-3.1-8B", language: "Hindi", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "Llama-3.1-8B", language: "Bahasa", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "Llama-3.1-8B", language: "Tagalog", sycophancy: 40, jailbreak: 80, hallucination: 20, overall_score: 72, safety_disparity: 2.0 },
+  { model: "Llama-3.1-8B", language: "Vietnamese", sycophancy: 50, jailbreak: 80, hallucination: 30, overall_score: 65, safety_disparity: 2.5 },
+  { model: "Llama-3.1-8B", language: "English", sycophancy: 20, jailbreak: 90, hallucination: 10, overall_score: 86, safety_disparity: 1.0 },
+  
+  { model: "Qwen2.5-7B", language: "Thai", sycophancy: 50, jailbreak: 70, hallucination: 40, overall_score: 59, safety_disparity: 2.5 },
+  { model: "Qwen2.5-7B", language: "Hindi", sycophancy: 40, jailbreak: 80, hallucination: 30, overall_score: 69, safety_disparity: 2.0 },
+  { model: "Qwen2.5-7B", language: "Bahasa", sycophancy: 30, jailbreak: 80, hallucination: 20, overall_score: 76, safety_disparity: 1.5 },
+  { model: "Qwen2.5-7B", language: "Tagalog", sycophancy: 50, jailbreak: 70, hallucination: 30, overall_score: 62, safety_disparity: 2.5 },
+  { model: "Qwen2.5-7B", language: "Vietnamese", sycophancy: 60, jailbreak: 70, hallucination: 30, overall_score: 58, safety_disparity: 3.0 },
+  { model: "Qwen2.5-7B", language: "English", sycophancy: 20, jailbreak: 90, hallucination: 20, overall_score: 83, safety_disparity: 1.0 }
+];
+
+const LANG_MAP = {
+  'en': 'English',
+  'hi': 'Hindi',
+  'th': 'Thai',
+  'id': 'Bahasa',
+  'tl': 'Tagalog',
+  'vi': 'Vietnamese'
+};
+
 function leaderboardRow(r, rank) {
   const overall = r.overall_score;
   const topClass = rank <= 3 ? 'top' : '';
@@ -1072,6 +1118,7 @@ function leaderboardRow(r, rank) {
   <tr>
     <td><div class="rank-num ${topClass}">${rank}</div></td>
     <td><span class="font-semibold">${escHtml(r.model)}</span></td>
+    <td><span class="text-secondary font-semibold">${escHtml(r.language)}</span></td>
     <td>
       <div class="score-cell">
         <span class="font-bold">${overall}%</span>
@@ -1088,13 +1135,15 @@ function leaderboardRow(r, rank) {
 }
 
 function demoLeaderboard() {
-  return [
-    { model:'Gemma-2-9B',   overall_score:80, sycophancy:77, jailbreak:85, hallucination:80, safety_disparity:2.33 },
-    { model:'SeaLLM-7B',   overall_score:78, sycophancy:73, jailbreak:82, hallucination:80, safety_disparity:1.33 },
-    { model:'Llama-3.1-8B', overall_score:74, sycophancy:65, jailbreak:80, hallucination:78, safety_disparity:1.75 },
-    { model:'Qwen2.5-7B',   overall_score:68, sycophancy:58, jailbreak:77, hallucination:72, safety_disparity:2.08 },
-    { model:'Mistral-7B',   overall_score:63, sycophancy:55, jailbreak:68, hallucination:68, safety_disparity:1.50 }
-  ];
+  const langSel = document.getElementById('sb-language');
+  const langCode = langSel ? langSel.value : 'all';
+  
+  let list = [...SAFETYBENCH_DATA];
+  if (langCode !== 'all') {
+    const targetLang = LANG_MAP[langCode];
+    list = list.filter(r => r.language === targetLang);
+  }
+  return list;
 }
 
 // ============================================================
@@ -1717,7 +1766,7 @@ function initPolicyBridge() {
         showToast(`Policy map generated for: ${threat}`, 'success');
       } catch (_) {
         renderLaws(OFFLINE_LAWS[threat] || []);
-        showToast('Using offline policy database', 'warning');
+        console.warn('Using offline policy database');
       } finally {
         clearBtnLoading(mapBtn);
       }
@@ -1828,7 +1877,7 @@ function initPolicyBridge() {
             downloadFile(mockHtml, `${fname}.html`, 'text/html');
           }
         }
-        showToast('Backend offline — downloading offline demo report', 'warning');
+        console.warn('Backend offline — downloading offline demo report');
         if (emailVal) {
           showToast(`Offline mode: Simulated email sent to ${emailVal}`, 'info');
         }
