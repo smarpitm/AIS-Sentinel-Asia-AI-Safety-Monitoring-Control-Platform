@@ -12,20 +12,21 @@
 let resolvedApiRoot = window.__apiRoot || '/api';
 
 if (resolvedApiRoot === '/api' || resolvedApiRoot.startsWith('/')) {
-  // If running inside a cross-origin sandboxed iframe (like Streamlit Cloud components),
-  // relative fetches (/api) resolve to the sandbox domain instead of the parent app domain.
-  // We resolve the absolute URL using the parent page domain found in document.referrer.
-  if (document.referrer) {
-    try {
-      const refUrl = new URL(document.referrer);
-      if (refUrl.origin && !refUrl.origin.includes(window.location.hostname)) {
-        resolvedApiRoot = refUrl.origin.replace(/\/$/, '') + '/api';
-        console.log("[app.js] Cross-origin sandbox detected. Routing API requests to parent origin:", resolvedApiRoot);
-      }
-    } catch (e) {
-      console.warn("[app.js] Could not parse referrer URL:", e);
+  let parentOrigin = '';
+  try {
+    parentOrigin = window.parent.location.origin;
+  } catch (e) {
+    if (document.referrer) {
+      try {
+        parentOrigin = new URL(document.referrer).origin;
+      } catch (_) {}
     }
   }
+  if (!parentOrigin || parentOrigin === 'null') {
+    parentOrigin = `${window.location.protocol}//${window.location.hostname}:8501`;
+  }
+  resolvedApiRoot = parentOrigin.replace(/\/$/, '') + '/api';
+  console.log("[app.js] Resolved API root endpoint to:", resolvedApiRoot);
 }
 
 const BASE_URL = resolvedApiRoot;
