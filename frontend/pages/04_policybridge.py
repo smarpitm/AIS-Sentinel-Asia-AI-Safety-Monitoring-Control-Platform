@@ -207,15 +207,20 @@ with col_right:
     
     # Load comparison row data
     comparison_map = ASEAN_COMPARISON.get(risk_category, {})
+    countries = ["Vietnam", "India", "Singapore", "Indonesia", "EU"]
+    criteria = [
+        ("Has specific law?", "Has law"),
+        ("Human-in-the-loop required?", "HITL?"),
+        ("Penalty severity", "Penalty"),
+        ("Effective date", "Effective Date")
+    ]
+    
     comp_rows = []
-    for country, details in comparison_map.items():
-        comp_rows.append({
-            "Jurisdiction": country,
-            "Has specific law?": details["Has law"],
-            "Human-in-the-loop required?": details["HITL?"],
-            "Penalty severity": details["Penalty"],
-            "Effective date": details["Effective Date"]
-        })
+    for crit_display, crit_key in criteria:
+        row = {"Criterion": crit_display}
+        for country in countries:
+            row[country] = comparison_map.get(country, {}).get(crit_key, "N/A")
+        comp_rows.append(row)
     
     comp_df = pd.DataFrame(comp_rows)
     

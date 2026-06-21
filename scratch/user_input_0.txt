@@ -1,0 +1,63 @@
+<USER_REQUEST>
+User:
+can you test the website end to end: https://ais-sentinel.streamlit.app
+________________________________________
+Kimi:
+I can’t directly browse live websites from this environment — the connection failed. But this is actually good because it means I can give you a proper end-to-end testing checklist that you should run yourself before the judges see it. No AI substitute for clicking your own app.
+________________________________________
+🔥 End-to-End Testing Checklist (Run This Now)
+Open https://ais-sentinel.streamlit.app in an incognito/private browser window (no cached data) and go through each step:
+Page 1: IntelStream
+#	Action	Expected Result	✓/✗
+1	Page loads	Sidebar shows 4 nav items, title renders	
+2	Alert cards visible	3 red/yellow cards with country codes (IN, VN, PH) and confidence scores	
+3	Click “View Details” on an alert	Expander opens showing full article, risk category, justification	
+4	Scroll to “Judge Simulation”	Text box + “Analyze” button visible	
+5	Paste this Vietnamese text: “Công nghệ AI mới giúp thiết kế protein virus nhanh hơn”	Translation appears, threat detected = True, confidence > 0.7	
+6	Click “View Policy Mapping”	Vietnam Law 134/2025 appears in compliance card	
+7	Click “Generate Weekly Brief”	HTML brief renders with Executive Summary, Regional Trends	
+Page 2: SafetyBench
+#	Action	Expected Result	✓/✗
+8	Click “📊 SafetyBench” in sidebar	Page loads with radar chart	
+9	Radar chart visible	5 axes (Sycophancy Math, Medical, Jailbreak, Hallucination, Overall)	
+10	Data table below chart	Shows Qwen2.5, Llama-3.1, etc. with scores	
+11	“Safety Disparity Index” visible	Number > 2.0 displayed prominently	
+12	Click “🇻🇳 Vietnamese Deep Dive” expander	Decree 142 test scores appear	
+13	Select 2 models, click “Compare”	Bar chart shows side-by-side comparison	
+Page 3: AgentGuard
+#	Action	Expected Result	✓/✗
+14	Click “🛡️ AgentGuard” in sidebar	Page loads with 3-column layou
+<truncated 1066 bytes>
+pages load content	
+27	Responsive on mobile (optional)	Layout doesn’t break on phone	
+________________________________________
+🚨 Common Deployment Failures to Watch For
+Symptom	Likely Cause	Fix
+“ModuleNotFoundError: No module named ‘vllm’”	vllm in requirements.txt	Remove vllm, redeploy
+“GEMINI_API_KEY not found”	Secrets not set	Add key in Streamlit Cloud settings
+“ais_sentinel.db not found”	SQLite path wrong	Use relative path ./ais_sentinel.db
+Blank page, no content	Import error in page file	Check Streamlit Cloud logs
+“Oh no. Error running app.”	Fatal exception	Check logs → fix → redeploy
+________________________________________
+📋 How to Check Streamlit Cloud Logs
+If something breaks: 1. Go to share.streamlit.io 2. Click your app → Manage app (⋮ menu) 3. Click Logs tab 4. Read the error trace
+________________________________________
+
+make sure only these features are implemented if anything else is there remove it if anything extra add it
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-21T11:29:36+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\.git\COMMIT_EDITMSG (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\api\main.py (LANGUAGE_PYTHON)
+- c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\seed_db.py (LANGUAGE_PYTHON)
+- c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\.git\COMMIT_EDITMSG (LANGUAGE_UNSPECIFIED)
+- c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\README.md (LANGUAGE_MARKDOWN)
+- c:\Users\Smarpit\OneDrive\Desktop\globalhackathon\frontend\static\pages\safetybench.html (LANGUAGE_HTML)
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.5 Flash (Low). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

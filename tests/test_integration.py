@@ -56,7 +56,8 @@ class AISSentinelIntegrationTest(unittest.TestCase):
                 "risk_category": "AI-EngBio integration",
                 "justification": "AI models used to design new DNA sequences for gene synthesis.",
                 "entities_mentioned": ["AI", "DNA", "gene synthesis"],
-                "severity": "Critical"
+                "severity": "Critical",
+                "translation": "Scientists are developing AI models to design new DNA sequences for gene synthesis. This research poses high biosecurity risks."
             }
 
         self.api_patchers = [

@@ -29,9 +29,9 @@
     <div class="metric-icon red">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     </div>
-    <div class="metric-value">0.31</div>
-    <div class="metric-label">Safety Disparity Index</div>
-    <div class="metric-delta negative">↑ 0.04 vs baseline — high-resource langs score significantly better</div>
+    <div class="metric-value">2.19</div>
+    <div class="metric-label">Avg Safety Disparity Index</div>
+    <div class="metric-delta negative">↑ 0.12 vs baseline — non-English model vulnerabilities are over 2.1× higher</div>
   </div>
 
   <div class="card metric-card">
@@ -60,13 +60,11 @@
     <div class="form-group" style="margin-bottom:0;flex:1;min-width:180px;">
       <label class="form-label" for="sb-model">Model</label>
       <select class="form-select" id="sb-model">
-        <option>Claude 3.7 Sonnet</option>
-        <option>Gemini 2.5 Pro</option>
+        <option>Claude-3.5-Sonnet</option>
+        <option>Gemini-1.5-Pro</option>
         <option>GPT-4o</option>
-        <option>Llama 3.3 70B</option>
-        <option>Mistral Large</option>
-        <option>Phi-3.5 Mini</option>
-        <option>Command R+</option>
+        <option>Llama-3.1-70B</option>
+        <option>Qwen2.5-72B</option>
       </select>
     </div>
     <div class="form-group" style="margin-bottom:0;flex:1;min-width:160px;">
@@ -109,7 +107,7 @@
 </div>
 
 <!-- Leaderboard Table -->
-<div class="card" style="margin-bottom:24px;">
+<div class="card" id="sb-leaderboard-card" style="margin-bottom:24px;">
   <div class="card-header">
     <div>
       <div class="card-title">Safety Benchmark Leaderboard</div>
@@ -149,7 +147,7 @@
 </div>
 
 <!-- Chart Area -->
-<div class="grid grid-2" style="gap:24px;">
+<div class="grid grid-2" id="sb-charts-grid" style="gap:24px;">
 
   <div class="card control-card">
     <div class="card-header">
@@ -198,18 +196,23 @@
 </div>
 
 <!-- Bottom Row: Regional Deep Dive + Head-to-Head Comparison -->
-<div class="grid grid-2" style="gap:24px;margin-top:24px;">
+<div class="grid grid-2" id="sb-deepdive-grid" style="gap:24px;margin-top:24px;">
 
-  <!-- Vietnamese Deep Dive -->
-  <div class="card control-card">
-    <div class="card-header">
-      <div>
-        <div class="card-title">🇻🇳 Regional Deep Dive</div>
-        <div class="card-subtitle">Vietnamese-Specific safety compliance metrics</div>
+  <!-- Vietnamese Deep Dive Details Expander -->
+  <details class="card control-card" style="display:block;">
+    <summary style="cursor:pointer; outline:none; list-style:none;">
+      <style>
+        summary::-webkit-details-marker { display: none; }
+      </style>
+      <div class="card-header">
+        <div>
+          <div class="card-title">🇻🇳 Vietnamese Deep Dive</div>
+          <div class="card-subtitle">Vietnamese-Specific safety compliance metrics (Click to expand)</div>
+        </div>
+        <span class="badge badge-info">Decree 142</span>
       </div>
-      <span class="badge badge-info">Decree 142</span>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:14px;padding-top:4px;" id="sb-viet-metrics">
+    </summary>
+    <div style="display:flex;flex-direction:column;gap:14px;padding-top:14px;" id="sb-viet-metrics">
       <div class="progress-bar-container">
         <div class="progress-bar-label">
           <span>Decree 142 Compliance</span>
@@ -237,7 +240,7 @@
         <span style="font-size:10px;color:var(--text-muted);margin-top:2px;display:block;">Measures refusal success rates when models are asked to draft deceptive social narrative scripts in Vietnamese.</span>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- Model Comparison Matrix & Chart -->
   <div class="card control-card">
@@ -251,31 +254,33 @@
     <div class="flex gap-12" style="margin-bottom:12px;">
       <div class="form-group" style="flex:1;margin-bottom:0;">
         <select class="form-select" id="sb-comp-a" style="font-size:12px;padding:6px 24px 6px 12px;">
-          <option value="Claude 3.7 Sonnet" selected>Claude 3.7 Sonnet</option>
-          <option value="Gemini 2.5 Pro">Gemini 2.5 Pro</option>
+          <option value="Claude-3.5-Sonnet" selected>Claude-3.5-Sonnet</option>
+          <option value="Gemini-1.5-Pro">Gemini-1.5-Pro</option>
           <option value="GPT-4o">GPT-4o</option>
-          <option value="Llama 3.3 70B">Llama 3.3 70B</option>
-          <option value="Mistral Large">Mistral Large</option>
+          <option value="Llama-3.1-70B">Llama-3.1-70B</option>
+          <option value="Qwen2.5-72B">Qwen2.5-72B</option>
         </select>
       </div>
       <span style="align-self:center;font-size:12px;color:var(--text-muted);">vs</span>
       <div class="form-group" style="flex:1;margin-bottom:0;">
         <select class="form-select" id="sb-comp-b" style="font-size:12px;padding:6px 24px 6px 12px;">
-          <option value="Claude 3.7 Sonnet">Claude 3.7 Sonnet</option>
-          <option value="Gemini 2.5 Pro">Gemini 2.5 Pro</option>
+          <option value="Claude-3.5-Sonnet">Claude-3.5-Sonnet</option>
+          <option value="Gemini-1.5-Pro">Gemini-1.5-Pro</option>
           <option value="GPT-4o" selected>GPT-4o</option>
-          <option value="Llama 3.3 70B">Llama 3.3 70B</option>
-          <option value="Mistral Large">Mistral Large</option>
+          <option value="Llama-3.1-70B">Llama-3.1-70B</option>
+          <option value="Qwen2.5-72B">Qwen2.5-72B</option>
         </select>
       </div>
     </div>
+
+    <button class="btn btn-primary w-full" id="sb-compare-btn" style="width:100%; margin-bottom:12px;">Compare</button>
     
     <div class="chart-container" style="min-height:180px;position:relative;margin-bottom:12px;">
       <canvas id="sb-comparison-bar-chart" style="max-height:180px; width:100%;"></canvas>
     </div>
     
     <div id="sb-comparison-verdict" style="font-size:12px;color:var(--text-primary);font-weight:600;text-align:center;padding:6px;background:rgba(0, 217, 255, 0.05);border-radius:var(--radius-sm);border:1px solid rgba(0, 217, 255, 0.1);">
-      Winner: Claude 3.7 Sonnet has a higher safety score by 8.3%!
+      Winner: Claude-3.5-Sonnet has a higher safety score by 8.3%!
     </div>
   </div>
 

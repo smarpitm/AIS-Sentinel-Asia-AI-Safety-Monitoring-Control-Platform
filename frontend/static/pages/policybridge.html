@@ -42,11 +42,10 @@
         <div class="form-group" style="flex:1;margin-bottom:0;">
           <label class="form-label" for="pb-threat-sel">Threat Category</label>
           <select class="form-select" id="pb-threat-sel">
-            <option value="Biosecurity">Biosecurity — AI-Assisted Bioweapon Design</option>
-            <option value="AI Safety">AI Safety — Autonomous Unsafe Operation</option>
-            <option value="Dual-Use Research">Dual-Use Research — Misuse Potential</option>
-            <option value="Data Misuse">Data Misuse — Sensitive Data Exfiltration</option>
-            <option value="Model Weaponisation">Model Weaponisation — Harmful Fine-Tuning</option>
+            <option value="AI-EngBio integration">AI-EngBio integration — Autonomous modification of dual-use viral vectors</option>
+            <option value="Dual-use hardware">Dual-use hardware — Optimizing high-performance military controller firmware</option>
+            <option value="Policy gap">Policy gap — Autonomous system operating on critical public grids</option>
+            <option value="Data sovereignty risk">Data sovereignty risk — Exfiltration of regional health dataset prompt logs</option>
           </select>
         </div>
         <button class="btn btn-primary" id="pb-map-btn" style="height:42px;white-space:nowrap;">
@@ -172,19 +171,19 @@
             <div class="form-radio-group" style="flex-direction:column;gap:10px;">
               <div class="form-radio-item">
                 <input type="radio" id="pb-fmt-html" name="pb-export-fmt" value="HTML" checked />
-                <label for="pb-fmt-html">HTML Report</label>
+                <label for="pb-fmt-html">Generate Compliance Report HTML Preview</label>
               </div>
               <div class="form-radio-item">
                 <input type="radio" id="pb-fmt-pdf" name="pb-export-fmt" value="PDF" />
-                <label for="pb-fmt-pdf">PDF Document</label>
+                <label for="pb-fmt-pdf">📥 Download HTML (Print to PDF)</label>
               </div>
               <div class="form-radio-item">
                 <input type="radio" id="pb-fmt-json" name="pb-export-fmt" value="JSON" />
-                <label for="pb-fmt-json">JSON Data</label>
+                <label for="pb-fmt-json">Export JSON Data</label>
               </div>
               <div class="form-radio-item">
                 <input type="radio" id="pb-fmt-md" name="pb-export-fmt" value="Markdown" />
-                <label for="pb-fmt-md">Markdown</label>
+                <label for="pb-fmt-md">📥 Download Markdown Report</label>
               </div>
             </div>
           </div>
@@ -227,97 +226,46 @@
         <table class="matrix-table" aria-label="Regional Regulatory Comparison Matrix">
           <thead>
             <tr>
-              <th>Jurisdiction</th>
-              <th title="Legal Framework Exists">Legal</th>
-              <th title="Enforcement Active">Enforce</th>
-              <th title="AI-Specific Rules">AI Rules</th>
-              <th title="Biosecurity Coverage">Bio</th>
+              <th>Criterion</th>
+              <th>Vietnam</th>
+              <th>India</th>
+              <th>Singapore</th>
+              <th>Indonesia</th>
+              <th>EU</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="pb-matrix-body">
             <tr>
-              <td>India</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="check-icon">✓</span></td>
+              <td><strong>Has specific law?</strong></td>
+              <td><span class="check-icon">✅</span></td>
+              <td><span class="check-icon">✅</span></td>
+              <td><span class="cross-icon">❌</span></td>
+              <td><span class="cross-icon">❌</span></td>
+              <td><span class="check-icon">✅</span></td>
             </tr>
             <tr>
-              <td>Singapore</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
+              <td><strong>Human-in-the-loop required?</strong></td>
+              <td><span class="check-icon">✅</span></td>
+              <td><span class="cross-icon">❌</span></td>
+              <td><span class="cross-icon">❌</span></td>
+              <td><span class="cross-icon">❌</span></td>
+              <td><span class="check-icon">✅</span></td>
             </tr>
             <tr>
-              <td>Indonesia</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="partial-icon">~</span></td>
+              <td><strong>Penalty severity</strong></td>
+              <td><span class="cross-icon">High</span></td>
+              <td><span class="cross-icon">High</span></td>
+              <td><span class="check-icon">Low</span></td>
+              <td><span class="check-icon">Low</span></td>
+              <td><span class="cross-icon">High</span></td>
             </tr>
             <tr>
-              <td>Bangladesh</td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="partial-icon">~</span></td>
-            </tr>
-            <tr>
-              <td>Pakistan</td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-            </tr>
-            <tr>
-              <td>Sri Lanka</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="partial-icon">~</span></td>
-            </tr>
-            <tr>
-              <td>Thailand</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="check-icon">✓</span></td>
-            </tr>
-            <tr>
-              <td>Vietnam</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="partial-icon">~</span></td>
-            </tr>
-            <tr>
-              <td>Philippines</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="check-icon">✓</span></td>
-            </tr>
-            <tr>
-              <td>Nepal</td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-              <td><span class="cross-icon">✗</span></td>
-            </tr>
-            <tr>
-              <td>EU (ref)</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="check-icon">✓</span></td>
-            </tr>
-            <tr>
-              <td>WHO</td>
-              <td><span class="check-icon">✓</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="partial-icon">~</span></td>
-              <td><span class="check-icon">✓</span></td>
+              <td><strong>Effective date</strong></td>
+              <td><span>2025-06-01</span></td>
+              <td><span>2025-12-01</span></td>
+              <td><span>N/A</span></td>
+              <td><span>N/A</span></td>
+              <td><span>2026-08-01</span></td>
             </tr>
           </tbody>
         </table>

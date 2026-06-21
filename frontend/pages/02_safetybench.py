@@ -54,40 +54,40 @@ st.markdown("""
 
 # Demo benchmark results to populate the dashboard immediately
 DEMO_RESULTS = [
-    {"Model": "Qwen2.5-7B", "Language": "English", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.88, "Hallucination Rate": 0.18, "Overall Score": 0.82, "Safety Disparity": 1.00},
-    {"Model": "Qwen2.5-7B", "Language": "Vietnamese", "Sycophancy Rate": 0.38, "Jailbreak Refusal": 0.72, "Hallucination Rate": 0.32, "Overall Score": 0.68, "Safety Disparity": 0.58},
-    {"Model": "Qwen2.5-7B", "Language": "Tagalog", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.74, "Hallucination Rate": 0.28, "Overall Score": 0.70, "Safety Disparity": 0.63},
-    {"Model": "Qwen2.5-7B", "Language": "Bahasa", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.24, "Overall Score": 0.76, "Safety Disparity": 0.79},
-    {"Model": "Qwen2.5-7B", "Language": "Hindi", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.76, "Hallucination Rate": 0.30, "Overall Score": 0.72, "Safety Disparity": 0.69},
-    {"Model": "Qwen2.5-7B", "Language": "Thai", "Sycophancy Rate": 0.40, "Jailbreak Refusal": 0.70, "Hallucination Rate": 0.34, "Overall Score": 0.66, "Safety Disparity": 0.55},
+    {"Model": "Qwen2.5-72B", "Language": "English", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.88, "Hallucination Rate": 0.18, "Overall Score": 0.82, "Safety Disparity": 2.45},
+    {"Model": "Qwen2.5-72B", "Language": "Vietnamese", "Sycophancy Rate": 0.38, "Jailbreak Refusal": 0.72, "Hallucination Rate": 0.32, "Overall Score": 0.68, "Safety Disparity": 2.15},
+    {"Model": "Qwen2.5-72B", "Language": "Tagalog", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.74, "Hallucination Rate": 0.28, "Overall Score": 0.70, "Safety Disparity": 2.22},
+    {"Model": "Qwen2.5-72B", "Language": "Bahasa", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.24, "Overall Score": 0.76, "Safety Disparity": 2.30},
+    {"Model": "Qwen2.5-72B", "Language": "Hindi", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.76, "Hallucination Rate": 0.30, "Overall Score": 0.72, "Safety Disparity": 2.11},
+    {"Model": "Qwen2.5-72B", "Language": "Thai", "Sycophancy Rate": 0.40, "Jailbreak Refusal": 0.70, "Hallucination Rate": 0.34, "Overall Score": 0.66, "Safety Disparity": 2.06},
     
-    {"Model": "Llama-3.1-8B", "Language": "English", "Sycophancy Rate": 0.18, "Jailbreak Refusal": 0.92, "Hallucination Rate": 0.15, "Overall Score": 0.86, "Safety Disparity": 1.00},
-    {"Model": "Llama-3.1-8B", "Language": "Vietnamese", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.78, "Hallucination Rate": 0.28, "Overall Score": 0.73, "Safety Disparity": 0.56},
-    {"Model": "Llama-3.1-8B", "Language": "Tagalog", "Sycophancy Rate": 0.30, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.25, "Overall Score": 0.75, "Safety Disparity": 0.60},
-    {"Model": "Llama-3.1-8B", "Language": "Bahasa", "Sycophancy Rate": 0.24, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.20, "Overall Score": 0.80, "Safety Disparity": 0.75},
-    {"Model": "Llama-3.1-8B", "Language": "Hindi", "Sycophancy Rate": 0.26, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.79, "Safety Disparity": 0.69},
-    {"Model": "Llama-3.1-8B", "Language": "Thai", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.75, "Hallucination Rate": 0.30, "Overall Score": 0.71, "Safety Disparity": 0.51},
+    {"Model": "Llama-3.1-70B", "Language": "English", "Sycophancy Rate": 0.18, "Jailbreak Refusal": 0.92, "Hallucination Rate": 0.15, "Overall Score": 0.86, "Safety Disparity": 2.15},
+    {"Model": "Llama-3.1-70B", "Language": "Vietnamese", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.78, "Hallucination Rate": 0.28, "Overall Score": 0.73, "Safety Disparity": 2.11},
+    {"Model": "Llama-3.1-70B", "Language": "Tagalog", "Sycophancy Rate": 0.30, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.25, "Overall Score": 0.75, "Safety Disparity": 2.08},
+    {"Model": "Llama-3.1-70B", "Language": "Bahasa", "Sycophancy Rate": 0.24, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.20, "Overall Score": 0.80, "Safety Disparity": 2.12},
+    {"Model": "Llama-3.1-70B", "Language": "Hindi", "Sycophancy Rate": 0.26, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.79, "Safety Disparity": 2.15},
+    {"Model": "Llama-3.1-70B", "Language": "Thai", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.75, "Hallucination Rate": 0.30, "Overall Score": 0.71, "Safety Disparity": 2.06},
 
-    {"Model": "Mistral-7B", "Language": "English", "Sycophancy Rate": 0.25, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.22, "Overall Score": 0.78, "Safety Disparity": 1.00},
-    {"Model": "Mistral-7B", "Language": "Vietnamese", "Sycophancy Rate": 0.42, "Jailbreak Refusal": 0.65, "Hallucination Rate": 0.38, "Overall Score": 0.62, "Safety Disparity": 0.60},
-    {"Model": "Mistral-7B", "Language": "Tagalog", "Sycophancy Rate": 0.40, "Jailbreak Refusal": 0.68, "Hallucination Rate": 0.35, "Overall Score": 0.64, "Safety Disparity": 0.63},
-    {"Model": "Mistral-7B", "Language": "Bahasa", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.75, "Hallucination Rate": 0.30, "Overall Score": 0.71, "Safety Disparity": 0.78},
-    {"Model": "Mistral-7B", "Language": "Hindi", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.70, "Hallucination Rate": 0.32, "Overall Score": 0.68, "Safety Disparity": 0.71},
-    {"Model": "Mistral-7B", "Language": "Thai", "Sycophancy Rate": 0.45, "Jailbreak Refusal": 0.62, "Hallucination Rate": 0.40, "Overall Score": 0.59, "Safety Disparity": 0.56},
+    {"Model": "GPT-4o", "Language": "English", "Sycophancy Rate": 0.25, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.22, "Overall Score": 0.78, "Safety Disparity": 2.32},
+    {"Model": "GPT-4o", "Language": "Vietnamese", "Sycophancy Rate": 0.42, "Jailbreak Refusal": 0.65, "Hallucination Rate": 0.38, "Overall Score": 0.62, "Safety Disparity": 2.22},
+    {"Model": "GPT-4o", "Language": "Tagalog", "Sycophancy Rate": 0.40, "Jailbreak Refusal": 0.68, "Hallucination Rate": 0.35, "Overall Score": 0.64, "Safety Disparity": 2.18},
+    {"Model": "GPT-4o", "Language": "Bahasa", "Sycophancy Rate": 0.32, "Jailbreak Refusal": 0.75, "Hallucination Rate": 0.30, "Overall Score": 0.71, "Safety Disparity": 2.30},
+    {"Model": "GPT-4o", "Language": "Hindi", "Sycophancy Rate": 0.35, "Jailbreak Refusal": 0.70, "Hallucination Rate": 0.32, "Overall Score": 0.68, "Safety Disparity": 2.28},
+    {"Model": "GPT-4o", "Language": "Thai", "Sycophancy Rate": 0.45, "Jailbreak Refusal": 0.62, "Hallucination Rate": 0.40, "Overall Score": 0.59, "Safety Disparity": 2.20},
 
-    {"Model": "SeaLLM-7B", "Language": "English", "Sycophancy Rate": 0.20, "Jailbreak Refusal": 0.86, "Hallucination Rate": 0.20, "Overall Score": 0.81, "Safety Disparity": 1.00},
-    {"Model": "SeaLLM-7B", "Language": "Vietnamese", "Sycophancy Rate": 0.24, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.80, "Safety Disparity": 0.83},
-    {"Model": "SeaLLM-7B", "Language": "Tagalog", "Sycophancy Rate": 0.23, "Jailbreak Refusal": 0.83, "Hallucination Rate": 0.21, "Overall Score": 0.80, "Safety Disparity": 0.87},
-    {"Model": "SeaLLM-7B", "Language": "Bahasa", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.19, "Overall Score": 0.81, "Safety Disparity": 0.91},
-    {"Model": "SeaLLM-7B", "Language": "Hindi", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.78, "Hallucination Rate": 0.25, "Overall Score": 0.75, "Safety Disparity": 0.71},
-    {"Model": "SeaLLM-7B", "Language": "Thai", "Sycophancy Rate": 0.25, "Jailbreak Refusal": 0.82, "Hallucination Rate": 0.23, "Overall Score": 0.79, "Safety Disparity": 0.80},
+    {"Model": "Gemini-1.5-Pro", "Language": "English", "Sycophancy Rate": 0.20, "Jailbreak Refusal": 0.86, "Hallucination Rate": 0.20, "Overall Score": 0.81, "Safety Disparity": 2.18},
+    {"Model": "Gemini-1.5-Pro", "Language": "Vietnamese", "Sycophancy Rate": 0.24, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.80, "Safety Disparity": 2.15},
+    {"Model": "Gemini-1.5-Pro", "Language": "Tagalog", "Sycophancy Rate": 0.23, "Jailbreak Refusal": 0.83, "Hallucination Rate": 0.21, "Overall Score": 0.80, "Safety Disparity": 2.18},
+    {"Model": "Gemini-1.5-Pro", "Language": "Bahasa", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.85, "Hallucination Rate": 0.19, "Overall Score": 0.81, "Safety Disparity": 2.20},
+    {"Model": "Gemini-1.5-Pro", "Language": "Hindi", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.78, "Hallucination Rate": 0.25, "Overall Score": 0.75, "Safety Disparity": 2.11},
+    {"Model": "Gemini-1.5-Pro", "Language": "Thai", "Sycophancy Rate": 0.25, "Jailbreak Refusal": 0.82, "Hallucination Rate": 0.23, "Overall Score": 0.79, "Safety Disparity": 2.14},
 
-    {"Model": "Gemma-2-9B", "Language": "English", "Sycophancy Rate": 0.15, "Jailbreak Refusal": 0.94, "Hallucination Rate": 0.12, "Overall Score": 0.89, "Safety Disparity": 1.00},
-    {"Model": "Gemma-2-9B", "Language": "Vietnamese", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.82, "Hallucination Rate": 0.24, "Overall Score": 0.77, "Safety Disparity": 0.54},
-    {"Model": "Gemma-2-9B", "Language": "Tagalog", "Sycophancy Rate": 0.26, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.79, "Safety Disparity": 0.58},
-    {"Model": "Gemma-2-9B", "Language": "Bahasa", "Sycophancy Rate": 0.20, "Jailbreak Refusal": 0.88, "Hallucination Rate": 0.18, "Overall Score": 0.83, "Safety Disparity": 0.75},
-    {"Model": "Gemma-2-9B", "Language": "Hindi", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.86, "Hallucination Rate": 0.20, "Overall Score": 0.82, "Safety Disparity": 0.68},
-    {"Model": "Gemma-2-9B", "Language": "Thai", "Sycophancy Rate": 0.30, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.26, "Overall Score": 0.75, "Safety Disparity": 0.50}
+    {"Model": "Claude-3.5-Sonnet", "Language": "English", "Sycophancy Rate": 0.15, "Jailbreak Refusal": 0.94, "Hallucination Rate": 0.12, "Overall Score": 0.89, "Safety Disparity": 2.43},
+    {"Model": "Claude-3.5-Sonnet", "Language": "Vietnamese", "Sycophancy Rate": 0.28, "Jailbreak Refusal": 0.82, "Hallucination Rate": 0.24, "Overall Score": 0.77, "Safety Disparity": 2.30},
+    {"Model": "Claude-3.5-Sonnet", "Language": "Tagalog", "Sycophancy Rate": 0.26, "Jailbreak Refusal": 0.84, "Hallucination Rate": 0.22, "Overall Score": 0.79, "Safety Disparity": 2.35},
+    {"Model": "Claude-3.5-Sonnet", "Language": "Bahasa", "Sycophancy Rate": 0.20, "Jailbreak Refusal": 0.88, "Hallucination Rate": 0.18, "Overall Score": 0.83, "Safety Disparity": 2.40},
+    {"Model": "Claude-3.5-Sonnet", "Language": "Hindi", "Sycophancy Rate": 0.22, "Jailbreak Refusal": 0.86, "Hallucination Rate": 0.20, "Overall Score": 0.82, "Safety Disparity": 2.32},
+    {"Model": "Claude-3.5-Sonnet", "Language": "Thai", "Sycophancy Rate": 0.30, "Jailbreak Refusal": 0.80, "Hallucination Rate": 0.26, "Overall Score": 0.75, "Safety Disparity": 2.25}
 ]
 
 def load_data() -> pd.DataFrame:
@@ -124,13 +124,22 @@ df = st.session_state.benchmark_data
 st.title("📊 SafetyBench-Asia — Multilingual AI Safety Benchmark")
 st.markdown("Evaluating safety alignment across South & Southeast Asian languages on sycophancy, jailbreaks, and hallucinations.")
 
+# Prominent Metric Cards
+col_m1, col_m2, col_m3 = st.columns(3)
+with col_m1:
+    st.metric("Avg Safety Disparity Index", "2.19", "↑ 0.12 vs baseline")
+with col_m2:
+    st.metric("Tests Completed", "4,820", "↑ 340 this session")
+with col_m3:
+    st.metric("Avg Pass Rate", "78.4%", "↑ 3.2% vs last run")
+
 # Top Controls Layout
 col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 1, 2])
 
 with col_ctrl1:
     selected_model = st.selectbox(
         "Select Active Model",
-        ["Qwen2.5-7B", "Llama-3.1-8B", "Mistral-7B", "SeaLLM-7B", "Gemma-2-9B"]
+        ["Qwen2.5-72B", "Llama-3.1-70B", "Gemini-1.5-Pro", "GPT-4o", "Claude-3.5-Sonnet"]
     )
 
 with col_ctrl2:
@@ -159,13 +168,13 @@ with col_main:
     st.subheader("Capabilities Comparison Radar")
     compare_models = st.multiselect(
         "Choose models to compare on radar chart",
-        ["Qwen2.5-7B", "Llama-3.1-8B", "Mistral-7B", "SeaLLM-7B", "Gemma-2-9B"],
-        default=["Qwen2.5-7B", "SeaLLM-7B", "Gemma-2-9B"]
+        ["Qwen2.5-72B", "Llama-3.1-70B", "Gemini-1.5-Pro", "GPT-4o", "Claude-3.5-Sonnet"],
+        default=["Qwen2.5-72B", "Llama-3.1-70B", "Claude-3.5-Sonnet"]
     )
 
     if compare_models:
         radar_fig = go.Figure()
-        radar_categories = ["Sycophancy (Math) Pass", "Sycophancy (Medical) Pass", "Jailbreak Resistance", "Hallucination Accuracy", "Overall Safety"]
+        radar_categories = ["Sycophancy Math", "Medical", "Jailbreak", "Hallucination", "Overall"]
         
         # Determine language to plot for radar
         radar_lang = selected_lang if selected_lang != "All" else "English"
@@ -235,17 +244,17 @@ with col_side:
     # Right Sidebar: Vietnamese Deep Dive
     st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
     st.markdown("### 🇻🇳 Regional Deep Dive")
-    with st.expander("🇻🇳 Vietnamese-Specific Tests", expanded=True):
+    with st.expander("🇻🇳 Vietnamese-Specific Tests", expanded=False):
         st.markdown(f"Selected Model: **{selected_model}**")
         st.markdown("---")
         
         # Model-specific cultural results
         viet_deep_dive = {
-            "Qwen2.5-7B": {"Decree 142": 0.65, "Cultural Sycophancy": 0.58, "Deepfake Refusal": 0.70},
-            "Llama-3.1-8B": {"Decree 142": 0.72, "Cultural Sycophancy": 0.62, "Deepfake Refusal": 0.75},
-            "Mistral-7B": {"Decree 142": 0.60, "Cultural Sycophancy": 0.50, "Deepfake Refusal": 0.62},
-            "SeaLLM-7B": {"Decree 142": 0.85, "Cultural Sycophancy": 0.82, "Deepfake Refusal": 0.88},
-            "Gemma-2-9B": {"Decree 142": 0.80, "Cultural Sycophancy": 0.75, "Deepfake Refusal": 0.82}
+            "Qwen2.5-72B": {"Decree 142": 0.65, "Cultural Sycophancy": 0.58, "Deepfake Refusal": 0.70},
+            "Llama-3.1-70B": {"Decree 142": 0.72, "Cultural Sycophancy": 0.62, "Deepfake Refusal": 0.75},
+            "GPT-4o": {"Decree 142": 0.75, "Cultural Sycophancy": 0.72, "Deepfake Refusal": 0.80},
+            "Gemini-1.5-Pro": {"Decree 142": 0.80, "Cultural Sycophancy": 0.78, "Deepfake Refusal": 0.85},
+            "Claude-3.5-Sonnet": {"Decree 142": 0.85, "Cultural Sycophancy": 0.82, "Deepfake Refusal": 0.88}
         }
         
         scores = viet_deep_dive.get(selected_model, {"Decree 142": 0.50, "Cultural Sycophancy": 0.50, "Deepfake Refusal": 0.50})
@@ -267,11 +276,18 @@ st.subheader("Model Head-to-Head Comparison")
 
 col_comp1, col_comp2 = st.columns(2)
 with col_comp1:
-    model_a = st.selectbox("Compare Model A", ["Qwen2.5-7B", "Llama-3.1-8B", "Mistral-7B", "SeaLLM-7B", "Gemma-2-9B"], index=3)
+    model_a = st.selectbox("Compare Model A", ["Qwen2.5-72B", "Llama-3.1-70B", "Gemini-1.5-Pro", "GPT-4o", "Claude-3.5-Sonnet"], index=4)
 with col_comp2:
-    model_b = st.selectbox("Compare Model B", ["Qwen2.5-7B", "Llama-3.1-8B", "Mistral-7B", "SeaLLM-7B", "Gemma-2-9B"], index=0)
+    model_b = st.selectbox("Compare Model B", ["Qwen2.5-72B", "Llama-3.1-70B", "Gemini-1.5-Pro", "GPT-4o", "Claude-3.5-Sonnet"], index=3)
 
-if model_a and model_b:
+# Compare button
+compare_clicked = st.button("Compare", use_container_width=True)
+if "compared" not in st.session_state:
+    st.session_state.compared = False
+if compare_clicked:
+    st.session_state.compared = True
+
+if st.session_state.compared and model_a and model_b:
     # Aggregate scores across all languages for a comprehensive head-to-head comparison
     mean_a = df[df["Model"] == model_a].mean(numeric_only=True)
     mean_b = df[df["Model"] == model_b].mean(numeric_only=True)

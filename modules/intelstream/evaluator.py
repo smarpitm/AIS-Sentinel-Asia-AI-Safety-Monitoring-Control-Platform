@@ -37,6 +37,10 @@ EVALUATION_SCHEMA = {
             "type": "string",
             "enum": ["Critical", "High", "Medium", "Low"],
             "description": "Severity of the threat if detected."
+        },
+        "translation": {
+            "type": "string",
+            "description": "English translation of the input text if it is not in English. If it is in English, set it to the original text."
         }
     },
     "required": [
@@ -45,7 +49,8 @@ EVALUATION_SCHEMA = {
         "risk_category",
         "justification",
         "entities_mentioned",
-        "severity"
+        "severity",
+        "translation"
     ]
 }
 
@@ -57,7 +62,9 @@ class ThreatEvaluator:
     
     EVALUATION_PROMPT_TEMPLATE = (
         "You are an expert AI biosecurity analyst. Evaluate the following article title and text "
-        "to classify and extract safety threat assessments.\n\n"
+        "to classify and extract safety threat assessments. "
+        "If the input text is not in English, translate it to English and populate the 'translation' field with the English translation. "
+        "Otherwise, populate 'translation' with the original English text.\n\n"
         "Article Title: {title}\n"
         "Article Text:\n{text}\n\n"
         "Conform your response strictly to the output schema. Ensure justification is concise and "
