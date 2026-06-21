@@ -92,7 +92,7 @@ These findings carry immediate regulatory significance. Vietnam's Law 134/2025 r
 
 ## Limitations & Future Work
 
-AIS-Sentinel is a functional prototype, not a production system. Current limitations include: reliance on a single LLM backend (Gemini Flash), synthetic benchmark data pending live model evaluation via vLLM, and a 20-article test set for classifier validation. Future work targets: (1) scaling to 15+ languages including Burmese, Khmer, and Bengali; (2) live deployment with streaming RSS ingestion; (3) integration with national CERT teams for real-time alert routing; and (4) expanding AgentGuard to code-execution and web-browsing agent modalities.
+AIS-Sentinel is a functional prototype, not a production system. Current limitations include: reliance on a simulated RSS feed (using a seeded SQLite database instead of active web scrapers on every load), reliance on a single LLM backend (Gemini Flash), synthetic benchmark data pending live model evaluation via vLLM, and a 20-article test set for classifier validation. Future work targets: (1) scaling to 15+ languages including Burmese, Khmer, and Bengali; (2) live deployment with streaming RSS ingestion and scheduled database updates; (3) integration with national CERT teams for real-time alert routing; and (4) expanding AgentGuard to code-execution and web-browsing agent modalities.
 
 ---
 

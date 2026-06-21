@@ -703,6 +703,7 @@ python tests/validate_classifier.py
 
 | Current Limitation | Planned Improvement |
 |:---|:---|
+| Simulated RSS feed | Integrate a scheduled background worker to run the RSS scraper pipeline (`modules/intelstream/scraper.py`) to periodically refresh the SQLite database |
 | Single LLM backend (Gemini Flash) | Multi-provider support (OpenAI, Anthropic, local models) |
 | Synthetic benchmark data | Live model evaluation via vLLM with real-world prompts |
 | 20-article classifier test set | 500+ labeled articles across 10+ languages |
